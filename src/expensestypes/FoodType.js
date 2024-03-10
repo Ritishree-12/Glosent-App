@@ -1,39 +1,24 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Image, ScrollView,Alert } from 'react-native'; // Removed ScrollView
 import { Input } from 'react-native-elements';
 import { Calendar } from 'react-native-calendars';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import DocumentPicker from 'react-native-document-picker';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { launchImageLibrary } from 'react-native-image-picker';
-
-const options = {
-    title: 'Select Image',
-    mediaType: 'photo',
-    includeBase64: false,
-};
 
 const FoodType = () => {
     const [activeBox, setActiveBox] = useState(0);
     const [showCalendar, setShowCalendar] = useState(false);
-    const[expenseType,setExpenseType]=useState('FOOD')
+    const [expenseType, setExpenseType] = useState('FOOD')
     const [foodDetails, setFoodDetails] = useState({
-        foodType: '',
         amount: '',
         dateOfExpense: '',
         notes: '',
+       
     });
-    const [selectedImageURI, setSelectedImageURI] = useState(null);
+   // const [selectedImageURI, setSelectedImageURI] = useState(null);
 
-    const openGallery = async () => {
-        try {
-            const response = await launchImageLibrary(options);
-            if (!response.didCancel) {
-                setSelectedImageURI(response.assets[0].uri);
-            }
-        } catch (error) {
-            console.error('Error uploading image:', error);
-        }
-    };
 
     const handleBoxPress = (index) => {
         setActiveBox(index);
@@ -55,62 +40,67 @@ const FoodType = () => {
     };
 
     const handleSubmit = async () => {
-        const formdata = new FormData();
-        formdata.append('foodType', activeBox === 0 ? 'Breakfast' :
-            activeBox === 1 ? 'Lunch' :
-                activeBox === 2 ? 'Snacks' : 'Dinner');
-        formdata.append('amount', foodDetails.amount);
-        formdata.append('dateOfExpense', foodDetails.dateOfExpense);
-        formdata.append('notes', foodDetails.notes);
-
-        if (selectedImageURI) {
-            const uriParts = selectedImageURI.split('.');
-            const fileType = uriParts[uriParts.length - 1];
-            formdata.append('file', {
-                uri: selectedImageURI,
-                name: `file.${fileType}`,
-                type: `image/${fileType}`,
-            });
-        }
-
+        const data = {
+            
+            subExpenseType: activeBox === 0 ? 'BreakFast' :
+            activeBox === 1 ? 'Lunch':
+             activeBox === 2 ? 'Snacks':'Dinner',
+            amount: foodDetails.amount,
+            dateOfExpense: foodDetails.dateOfExpense,
+            notes: foodDetails.notes,
+            expenseType: "food",
+            
+        };
+    
         try {
             const authToken = await AsyncStorage.getItem('authToken');
             if (!authToken) {
                 console.error('Authentication token not found');
                 return;
             }
-            console.log('formdata********************************************', formdata)
-            const response = await axios.post('http://46.28.44.174:5001/v1/expense/addExpense', formdata, {
+    
+            const response = await axios.post('http://46.28.44.174:5001/v1/expense/addExpense', data, {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
+                    'Content-Type': 'application/json', // Corrected content type
                     Authorization: `Bearer ${authToken}`
                 }
             });
-
-            console.log('Server response:', response.data);
-
-            setFoodDetails({
-                foodType: '',
-                amount: '',
-                dateOfExpense: '',
-                notes: '',
-            });
-            setSelectedImageURI(null);
-            setActiveBox(0);
-            setShowCalendar(false);
+    
+            // Handle the response data
+            if (response.data.status === "1") {
+                // Update your state or perform any other actions based on the response
+                const responseData = response.data.data;
+                console.log('Expense submitted successfully:', responseData);
+                Alert.alert('Food Type submitted successfully:', responseData);
+                // Clear the form fields
+                setFoodDetails({
+                   
+                    amount: '',
+                    dateOfExpense: '',
+                    notes: '',
+                    
+                });
+                setActiveBox(0);
+                setShowCalendar(false);
+            } else {
+                console.error('Expense submission failed:', response.data);
+                // Handle the failure scenario, display error message or take appropriate action
+            }
         } catch (error) {
             console.error('Error submitting data:', error);
+            // Handle the error scenario, display error message or take appropriate action
         }
     };
+    
 
     const handleReset = () => {
         setFoodDetails({
-            foodType: '',
+            subExpenseType: '',
             amount: '',
             dateOfExpense: '',
             notes: '',
+            
         });
-        setSelectedImageURI(null);
         setActiveBox(0);
         setShowCalendar(false);
     };
@@ -183,14 +173,14 @@ const FoodType = () => {
                     <View style={styles.attachTitle}>
                         <Text style={{ marginLeft: 18, fontWeight: 'bold', color: '#b9ce19' }}>Attach Receipts (Image or File)</Text>
                         <View style={styles.cameraContainer}>
-                            <TouchableOpacity style={styles.boxAttach} onPress={openGallery}>
+                            {/* <TouchableOpacity style={styles.boxAttach} onPress={openGallery}>
                                 <Image source={require('../../assets/images/upload.png')} style={{ width: 42, height: 28, }} />
                                 <Text style={{ fontSize: 10, margin: 4, color: '#fff' }}>Browse File to Upload</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.boxAttach} onPress={openGallery}>
+                            </TouchableOpacity> */}
+                            {/* <TouchableOpacity style={styles.boxAttach} onPress={openGallery}>
                                 <Image source={require('../../assets/images/photo.png')} style={{ width: 38, height: 30, }} />
                                 <Text style={{ fontSize: 10, margin: 4, color: '#fff' }}>Click Photo</Text>
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                         </View>
                     </View>
                     <View style={styles.boxContainer}>
