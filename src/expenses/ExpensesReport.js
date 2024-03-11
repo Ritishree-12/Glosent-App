@@ -17,7 +17,7 @@ const ExpensesReport = () => {
                         Authorization: `Bearer ${authToken}`,
                     },
                 });
-                console.log('report data updated',response)
+                console.log('report data updated **********************',response)
                 const data = response.data.data;
                 setExpensesData(data.expenseData); 
                 setLoading(false);
@@ -58,6 +58,7 @@ const ExpensesReport = () => {
 
             <View style={styles.section1}>
                 <Text style={{ color: '#fff', fontWeight: 'bold' }}>Total Expenses: {expensesData.length}</Text>
+                {/* <Text style={{ color: '#fff', fontWeight: 'bold' }}>Total Expenses: {expensesData.totalAmount}</Text> */}
                 <Pressable style={styles.section1Btn}>
                     <Text style={styles.section1BtnText}>Download statement</Text>
                 </Pressable>

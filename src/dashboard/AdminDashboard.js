@@ -13,7 +13,7 @@ const AdminDashboard = () => {
             <View style={styles.header}>
             <View>
                     <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-                        <Image source={require('../../assets/images/menu.png')} style={{ width: 24, height: 20, color: 'green', marginLeft: 30 }} />
+                        <Image source={require('../../assets/images/menu.png')} style={{ width: 24, height: 20, marginLeft: 30 }} />
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.headerText}>Admin Dashboard</Text>
@@ -42,7 +42,7 @@ const AdminDashboard = () => {
                             <Image source={require('../../assets/images/rupees.png')} style={{ width: 54, height: 54 }} />
                         </View>
                     </TouchableOpacity>
-                    <Text style={styles.title}>Approve Expenses</Text>
+                    <Text style={styles.title}>Approve Manager Expenses</Text>
                 </View>
 
             </View>
@@ -132,52 +132,56 @@ export default AdminDashboard;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#003c9e',
+        backgroundColor: '#003C9E',
     },
     header: {
-        backgroundColor: '#ffffff',
+        backgroundColor: '#FFFFFF',
         height: 70,
         justifyContent: 'flex-start',
         alignItems: 'center',
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,
-        borderColor: '#e2e733',
+        borderColor: '#E2E733',
         borderBottomWidth: 5,
         elevation: 5,
-        flexDirection:'row',
+        flexDirection: 'row',
     },
     headerText: {
         fontSize: 18,
         fontWeight: 'bold',
         color: '#000',
-        marginLeft:50
+        marginLeft: 50
     },
     boxContainer: {
         flexDirection: 'row',
         justifyContent: 'space-around',
         marginTop: 20,
+        paddingHorizontal: 10, 
     },
     boxContainer2: {
         flexDirection: 'row',
         justifyContent: 'space-around',
+        paddingHorizontal: 10, 
     },
     box: {
         width: 80,
         height: 80,
-        backgroundColor:'#09b724',
+        backgroundColor: '#09B724',
         borderRadius: 15,
         borderColor: '#fff',
         borderWidth: 0.6,
         alignItems: 'center',
         justifyContent: 'center',
         marginVertical: 10,
-        marginHorizontal: 10
+        marginHorizontal: 10,
     },
     title: {
         color: '#fff',
         fontSize: 12,
         fontWeight: 'bold',
         textAlign: 'center',
+        alignSelf: 'center',
+        width: 80, // Added width to limit the text width
     },
     section1: {
         flexDirection: 'row',
@@ -185,7 +189,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     yellowBtn: {
-        backgroundColor: '#E3e635',
+        backgroundColor: '#E3E635',
         borderRadius: 10,
         flexDirection: 'row',
         alignItems: 'center',
@@ -193,13 +197,13 @@ const styles = StyleSheet.create({
         margin: 10,
         borderColor: '#fff',
         borderWidth: 1,
-        width:160,
-        height:56
+        width: 160,
+        height: 56,
     },
     verticalLine: {
         width: 1,
         height: '100%',
         backgroundColor: '#C9CACB',
         marginHorizontal: 10,
-    }
+    },
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import HomeScreen from '../home/HomeScreen';
 import LogOut from '../authentication/LogOut';
@@ -13,21 +13,22 @@ const DrawerNav = () => {
     <View style={styles.container}>
       <Drawer.Navigator
         drawerContent={CustomDrawerContent}
+        screenOptions={{
+          drawerActiveTintColor: '#fff', // Text color for active items
+          drawerInactiveTintColor: '#fff', // Text color for inactive items
+        }}
       >
-        <Drawer.Screen name="Home" component={AuthStack}
-        options={{ headerShown: false }}
-        />
-        {/* <Drawer.Screen name="LogOut" component={LogOut} /> */}
+        <Drawer.Screen name="Home" component={AuthStack} options={{ headerShown: false }} />
+        <Drawer.Screen name="LogOut" component={LogOut} options={{ headerShown: true}} />
       </Drawer.Navigator>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'green',
-    color: '#fff'
   },
 });
 

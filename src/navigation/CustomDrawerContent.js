@@ -50,9 +50,9 @@ const CustomDrawerContent = (props) => {
         <Text style={styles.drawerHeaderText}>Profile</Text>
       </View>
       <DrawerItemList {...props} />
-      <TouchableOpacity onPress={() => handleLogout(determineLogoutApi(userRole))} style={styles.logoutButton}>
+      {/* <TouchableOpacity onPress={() => handleLogout(determineLogoutApi(userRole))} style={styles.logoutButton}>
         <Text style={styles.logoutText}>Logout</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </DrawerContentScrollView>
   );
 };

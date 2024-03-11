@@ -15,7 +15,7 @@ const ManagerList = () => {
         const fetchData = async () => {
             try {
                 const authToken = await AsyncStorage.getItem('authToken');
-                const response = await axios.get('http://46.28.44.174:5001/admin/employee/employeeList', {
+                const response = await axios.get('http://46.28.44.174:5001/admin/employee/managerList', {
                     headers: {
                         Authorization: `Bearer ${authToken}`,
                     },
@@ -38,9 +38,9 @@ const ManagerList = () => {
             <StatusBar backgroundColor="#003c9e" />
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-                    <Image source={require('../../assets/images/menu.png')} style={{ width: 24, height: 20, color: 'green', marginLeft: 30 }} />
+                    <Image source={require('../../assets/images/menu.png')} style={{ width: 24, height: 20, marginLeft: 30 }} />
                 </TouchableOpacity>
-                <Text style={styles.headerText}>View Employee List</Text>
+                <Text style={styles.headerText}>View Manager List</Text>
             </View>
             <View style={styles.section1}>
                 <TextInput
@@ -71,20 +71,20 @@ const ManagerList = () => {
                             </View>
                             <View>
                                 <View style={{ flexDirection: 'row', marginLeft: 10 }}>
-                                    <Text style={{ width: 100, fontSize: 9, fontWeight: 'bold', color: '#fff' }}>Name: {employee.personalInformation.firstName} {employee.personalInformation.middleName} {employee.personalInformation.lastName}</Text>
-                                    <Text style={{ width: 100, fontSize: 9, fontWeight: 'bold', color: '#e2e733' }}>Manager: {employee.managerId.firstName} {employee.managerId.middleName} {employee.managerId.lastName}</Text>
+                                    <Text style={{ width: 200, fontSize: 9, fontWeight: 'bold', color: '#fff' }}>Name: {employee.firstName} {employee.lastName}</Text>
+                                    
                                     <Image source={require('../../assets/images/edit.png')} style={{ width: 16, height: 16, marginLeft: 22 }} />
                                     <Image source={require('../../assets/images/delete.png')} style={{ width: 16, height: 16, marginLeft: 14 }} />
                                 </View>
-                                <View style={{ flexDirection: 'row', marginLeft: 10, marginTop: 10, width: 70 }}>
+                                <View style={{ flexDirection: 'row', marginLeft: 10, marginTop: 10, width: 200 }}>
                                     <View>
                                         <Text style={styles.text1}>Designation</Text>
                                         <Text style={styles.text2}>{employee.designation}</Text>
                                     </View>
                                     <View style={styles.verticalLine} />
                                     <View>
-                                        <Text style={styles.text1}>Employee ID</Text>
-                                        <Text style={styles.text2}>{employee.emplyId}</Text>
+                                        <Text style={styles.text1}>Manager ID</Text>
+                                        <Text style={styles.text2}>{employee.managerId}</Text>
                                     </View>
                                     <View style={styles.verticalLine} />
                                     <View>
@@ -94,7 +94,7 @@ const ManagerList = () => {
                                     <View style={styles.verticalLine} />
                                     <View>
                                         <Text style={styles.text1}>Departments</Text>
-                                        <Text style={styles.text2}>Marketing</Text>
+                                        <Text style={styles.text2}>{employee.managerDepartment}</Text>
                                     </View>
                                 </View>
                             </View>

@@ -39,47 +39,62 @@ const TransportType = () => {
     };
 
     const handleSubmit = async () => {
-        const subExpenseTypes = ['Auto', 'Car', 'Bus', 'Train'];
-        const selectedSubExpenseType = subExpenseTypes[activeBox]; // Get subExpenseType based on activeBox
-    
+        // navigation.goBack();
         const data = {
-            subExpenseType: selectedSubExpenseType, // Assign selected subExpenseType
+            subExpenseType: activeBox === 0 ? 'Auto' :
+            activeBox === 1 ? 'Car':
+             activeBox === 2 ? 'Bus':'Train',
             amount: transportDetails.amount,
             dateOfExpense: transportDetails.dateOfExpense,
-            pickup: transportDetails.pickup,
-            drop: transportDetails.drop,
             notes: transportDetails.notes,
-            selectedImage: selectedImage,
-            selectedFile: selectedFile,
+            expenseType: "transportation",
         };
-    
-        console.log('Submitted data:', data);
-    
         try {
             const authToken = await AsyncStorage.getItem('authToken');
-            console.log('transport Type bearer token----------------', authToken);
+            if (!authToken) {
+                console.error('Authentication token not found');
+                return;
+            }
             const response = await axios.post('http://46.28.44.174:5001/v1/expense/addExpense', data, {
                 headers: {
-                    Authorization: `Bearer ${authToken}`,
-                    'Content-Type': 'application/json',
-                },
+                    'Content-Type': 'application/json', // Corrected content type
+                    Authorization: `Bearer ${authToken}`
+                }
             });
-            console.log('API Response:', response.data);
-            Alert.alert('Form Submission Successful');
-            // Clear the states if API call succeeds
-            setTransportDetails({
-                amount: '',
-                dateOfExpense: '',
-                pickup: '',
-                drop: '',
-                notes: '',
-            });
-            setSelectedImage(null); // Clear selected image
-            setSelectedFile(null);  // Clear selected file
+            // Handle the response data
+            if (response.data.status === "1") {
+                // Update your state or perform any other actions based on the response
+                const responseData = response.data.data;
+                console.log('Expense submitted successfully:', responseData);
+                // Clear the form fields
+                setTransportDetails({
+                    amount: '',
+                    dateOfExpense: '',
+                    notes: '',
+                });
+                setActiveBox(0);
+                setShowCalendar(false);
+                Alert.alert(
+                    'Success',
+                    'Expense details submitted successfully!',
+                    [
+                        {
+                            text: 'OK',
+                            onPress: () => console.log('OK Pressed')
+                        }
+                    ],
+                    { cancelable: false }
+                );
+            } else {
+                console.error('Expense submission failed:', response.data);
+                // Handle the failure scenario, display error message or take appropriate action
+            }
         } catch (error) {
             console.error('Error submitting data:', error);
+            // Handle the error scenario, display error message or take appropriate action
         }
     };
+    
 
     const handlePhotoPicker = () => {
         const options = {

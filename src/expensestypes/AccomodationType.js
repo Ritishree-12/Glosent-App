@@ -20,7 +20,6 @@ const AccommodationType = () => {
         subExpenseType: 'Hotel',
         checkIn: '',
         checkOut: '',
-        expensesType:'Accommodation'
 
     });
 
@@ -41,51 +40,62 @@ const AccommodationType = () => {
     };
 
     const handleSubmit = async () => {
-        const subExpenseTypes = ['Hotel','Rent'];
-        const selectedSubExpenseType = subExpenseTypes[activeBox]; // Get subExpenseType based on activeBox
-    
+        // navigation.goBack();
         const data = {
-            subExpenseType: selectedSubExpenseType, // Assign selected subExpenseType
+            subExpenseType: activeBox ===0 ? 'Hotel':'Rent',
+            // activeBox === 1 ? 'Rent':
+            //  activeBox === 2 ? 'Bus':'Train',
             amount: accommodationDetails.amount,
             dateOfExpense: accommodationDetails.dateOfExpense,
-            pickup: accommodationDetails.pickup,
-            drop: accommodationDetails.drop,
             notes: accommodationDetails.notes,
-            expensesType: 'Accommodation',
-            selectedImage: selectedImage,
-            selectedFile: selectedFile,
+            expenseType: "accommodation",
         };
-    
-        console.log('Submitted data:', data);
-        console.log('Expenses Type:', accommodationDetails.expensesType);
-    
         try {
             const authToken = await AsyncStorage.getItem('authToken');
-            console.log('transport Type bearer token----------------', authToken);
+            if (!authToken) {
+                console.error('Authentication token not found');
+                return;
+            }
             const response = await axios.post('http://46.28.44.174:5001/v1/expense/addExpense', data, {
                 headers: {
-                    Authorization: `Bearer ${authToken}`,
-                    'Content-Type': 'application/json',
-                },
+                    'Content-Type': 'application/json', // Corrected content type
+                    Authorization: `Bearer ${authToken}`
+                }
             });
-            console.log('Accommodation data @@@@@@@@@@@@@@@@@@@@@@@@@:', response.data);
-            console.log('Expense Type:', response.data.expensesType);
-            Alert.alert('Form Submission Successful');
-           
-            setAccommodationDetails({
-                amount: '',
-                dateOfExpense: '',
-                pickup: '',
-                drop: '',
-                notes: '',
-                expensesType: 'Accommodation',
-            });
-            setSelectedImage(null);
-            setSelectedFile(null);
+            // Handle the response data
+            if (response.data.status === "1") {
+                // Update your state or perform any other actions based on the response
+                const responseData = response.data.data;
+                console.log('Expense submitted successfully:', responseData);
+                // Clear the form fields
+                setAccommodationDetails({
+                    amount: '',
+                    dateOfExpense: '',
+                    notes: '',
+                });
+                setActiveBox(0);
+                setShowCalendar(false);
+                Alert.alert(
+                    'Success',
+                    'Expense details submitted successfully!',
+                    [
+                        {
+                            text: 'OK',
+                            onPress: () => console.log('OK Pressed')
+                        }
+                    ],
+                    { cancelable: false }
+                );
+            } else {
+                console.error('Expense submission failed:', response.data);
+                // Handle the failure scenario, display error message or take appropriate action
+            }
         } catch (error) {
             console.error('Error submitting data:', error);
+            // Handle the error scenario, display error message or take appropriate action
         }
     };
+    
 
     const handlePhotoPicker = () => {
         const options = {

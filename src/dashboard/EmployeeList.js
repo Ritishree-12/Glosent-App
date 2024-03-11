@@ -48,7 +48,7 @@ const EmployeeList = () => {
             <View style={styles.header}>
                 <View>
                     <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-                        <Image source={require('../../assets/images/menu.png')} style={{ width: 24, height: 20, color: 'green', marginLeft: 30 }} />
+                        <Image source={require('../../assets/images/menu.png')} style={{ width: 24, height: 20, marginLeft: 30 }} />
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.headerText}>View Employee List</Text>

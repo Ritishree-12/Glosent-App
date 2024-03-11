@@ -38,7 +38,7 @@ const AdminEmployeeList = () => {
             <StatusBar backgroundColor="#003c9e" />
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-                    <Image source={require('../../assets/images/menu.png')} style={{ width: 24, height: 20, color: 'green', marginLeft: 30 }} />
+                    <Image source={require('../../assets/images/menu.png')} style={{ width: 24, height: 20,marginLeft: 30 }} />
                 </TouchableOpacity>
                 <Text style={styles.headerText}>View Employee List</Text>
             </View>
