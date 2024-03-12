@@ -1,8 +1,12 @@
-import { StyleSheet, Text, View, StatusBar, TextInput, Pressable, Image, FlatList } from 'react-native'
+import { StyleSheet, Text, View, StatusBar, TextInput, Pressable, Image, FlatList,Dimensions } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+
+
+const { width } = Dimensions.get('window');
+
 export default function EmployeeExpenses() {
     const [expensesData, setExpensesData] = useState([]);
     const [error, setError] = useState(null);
@@ -24,18 +28,18 @@ export default function EmployeeExpenses() {
                 const authToken = await AsyncStorage.getItem('authToken');
                 const response = await axios.get('http://46.28.44.174:5001/manager/expense/fillterAlltheDataExpense', {
                     headers: {
-                         Authorization: `Bearer ${authToken}`,
+                        Authorization: `Bearer ${authToken}`,
                     },
                 });
                 const data = response.data.data;
                 console.log('expeses data****************************', data)
                 setExpensesData(data.expenses);
                 setFilteredExpenses(data.expenses);
-            
+
             } catch (error) {
                 console.error('Error fetching expenses data:', error);
                 setError(error.message);
-               
+
             }
         };
         fetchDataEmpl();
@@ -66,28 +70,31 @@ export default function EmployeeExpenses() {
                 <Text style={styles.infoText}>Total ₹: {item.totalExpenseAmount?.totalAmount}</Text>
             </View>
             <View style={styles.detailsContainer}>
-            <View style={{ width: '30%', alignSelf: 'center', justifyContent: 'flex-start' }}>
-                <Text numberOfLines={1} style={styles.infoText1}>Date: {item.dateOfExpense}</Text>
+                <View style={{ width: '30%', alignSelf: 'center', justifyContent: 'flex-start' }}>
+                    <Text numberOfLines={1} style={styles.infoText1}>Date: {item.dateOfExpense}</Text>
+                </View>
+                <View style={styles.leftBorder}>
+                    <Text style={styles.infoText2}>Food</Text>
+                    {item.expenseType === 'food' && <Text style={styles.infoText}>{item.amount}</Text>}
+                </View>
+                <View style={styles.leftBorder}>
+                    <Text style={styles.infoText2}>Accommodation</Text>
+                    {item.expenseType === 'accommodation' && <Text style={styles.infoText}>{item.amount}</Text>}
+                </View>
+                <View style={styles.leftBorder}>
+                    <Text style={styles.infoText2}>Transportation</Text>
+                    {item.expenseType === 'transportation' && <Text style={styles.infoText}>{item.amount}</Text>}
+                </View>
             </View>
-            <View style={styles.leftBorder}>
-                <Text style={styles.infoText2}>Food</Text>
-                {item.expenseType === 'food' && <Text style={styles.infoText}>{item.amount}</Text>}
-            </View>
-            <View style={styles.leftBorder}>
-                <Text style={styles.infoText2}>Accommodation</Text>
-                {item.expenseType === 'accommodation' && <Text style={styles.infoText}>{item.amount}</Text>}
-            </View>
-            <View style={styles.leftBorder}>
-                <Text style={styles.infoText2}>Transportation</Text>
-                {item.expenseType === 'transportation' && <Text style={styles.infoText}>{item.amount}</Text>}
-            </View>
-        </View>
         </View>
     );
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor="#003C9E" />
             <View style={styles.header}>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                    <Image source={require('../../assets/images/arrow.png')} style={{ width: 30, height: 30, }} />
+                </TouchableOpacity>
                 <Text style={styles.headerText}>Employee Expenses</Text>
             </View>
             <View style={{ flexDirection: 'row' }}>
@@ -105,12 +112,12 @@ export default function EmployeeExpenses() {
                         <Image style={styles.section2BtnImage1} source={require('../../assets/images/cancel.png')} />
                         <Text style={styles.section2BtnText}>Rejected</Text>
                     </Pressable>
-                    <Pressable style={[styles.section2Btn1,selectedStatus === 'pending', { backgroundColor: '#FFC300' }]}
+                    <Pressable style={[styles.section2Btn1, selectedStatus === 'pending', { backgroundColor: '#FFC300' }]}
                         onPress={() => setSelectedStatus('pending')}>
                         <Image style={styles.section2BtnImage} source={require('../../assets/images/pending.png')} />
                         <Text style={styles.section2BtnText}>Pending</Text>
                     </Pressable>
-                    <Pressable style={[styles.section2Btn1,selectedStatus === 'rejected', { backgroundColor: '#22BB33' }]}
+                    <Pressable style={[styles.section2Btn1, selectedStatus === 'rejected', { backgroundColor: '#22BB33' }]}
                         onPress={() => setSelectedStatus('approved')}>
                         <Image style={styles.section2BtnImage} source={require('../../assets/images/approve.png')} />
                         <Text style={styles.section2BtnText}>Approved</Text>
@@ -131,16 +138,23 @@ const styles = StyleSheet.create({
         backgroundColor: '#003C9E',
     },
     header: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#ffffff',
         height: 70,
-        justifyContent: 'center',
         alignItems: 'center',
+        justifyContent: 'center',
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,
         elevation: 5,
+        flexDirection: 'row',
+        paddingHorizontal: '2%',
+    },
+    backButton: {
+        position: 'absolute',
+        left: 18,
+        zIndex: 1,
     },
     headerText: {
-        fontSize: 18,
+        fontSize: width > 360 ? 18 : 16,
         fontWeight: 'bold',
         color: '#000',
     },
@@ -199,7 +213,7 @@ const styles = StyleSheet.create({
         width: 10,
         height: 15,
         alignSelf: 'center',
-        padding:10
+        padding: 10
     },
     section2BtnImage1: {
         width: 10,
@@ -215,8 +229,8 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         borderRadius: 10,
         marginTop: 5,
-        paddingVertical:10,
-        paddingHorizontal:10
+        paddingVertical: 10,
+        paddingHorizontal: 10
     },
     infoContainer: {
         flexDirection: 'row',
@@ -224,7 +238,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: 'white',
         marginTop: 2,
-        paddingVertical:5
+        paddingVertical: 5
     },
     infoText: {
         marginBottom: 5,
@@ -247,7 +261,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         color: 'white',
-        paddingVertical:10
+        paddingVertical: 10
     },
     leftBorder: {
         borderLeftWidth: 1,

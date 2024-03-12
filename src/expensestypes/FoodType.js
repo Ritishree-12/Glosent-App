@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Image, ScrollView, Dimensions } from 'react-native';
 import { Input } from 'react-native-elements';
 import { Calendar } from 'react-native-calendars';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
+const { width } = Dimensions.get('window');
+
 const FoodType = () => {
     const navigation = useNavigation();
-    
+
     const [activeBox, setActiveBox] = useState(0);
     const [showCalendar, setShowCalendar] = useState(false);
     const [expenseType, setExpenseType] = useState('FOOD')
@@ -16,9 +18,9 @@ const FoodType = () => {
         amount: '',
         dateOfExpense: '',
         notes: '',
-       
+
     });
-   // const [selectedImageURI, setSelectedImageURI] = useState(null);
+    // const [selectedImageURI, setSelectedImageURI] = useState(null);
 
 
     const handleBoxPress = (index) => {
@@ -42,44 +44,44 @@ const FoodType = () => {
 
     const handleSubmit = async () => {
         const data = {
-            
+
             subExpenseType: activeBox === 0 ? 'BreakFast' :
-            activeBox === 1 ? 'Lunch':
-             activeBox === 2 ? 'Snacks':'Dinner',
+                activeBox === 1 ? 'Lunch' :
+                    activeBox === 2 ? 'Snacks' : 'Dinner',
             amount: foodDetails.amount,
             dateOfExpense: foodDetails.dateOfExpense,
             notes: foodDetails.notes,
             expenseType: "food",
-            
+
         };
-    
+
         try {
             const authToken = await AsyncStorage.getItem('authToken');
             if (!authToken) {
                 console.error('Authentication token not found');
                 return;
             }
-    
+
             const response = await axios.post('http://46.28.44.174:5001/v1/expense/addExpense', data, {
                 headers: {
                     'Content-Type': 'application/json', // Corrected content type
                     Authorization: `Bearer ${authToken}`
                 }
             });
-    
+
             // Handle the response data
             if (response.data.status === "1") {
                 // Update your state or perform any other actions based on the response
                 const responseData = response.data.data;
                 console.log('Expense submitted successfully:', responseData);
-    
+
                 // Clear the form fields
                 setFoodDetails({
-                   
+
                     amount: '',
                     dateOfExpense: '',
                     notes: '',
-                    
+
                 });
                 setActiveBox(0);
                 setShowCalendar(false);
@@ -92,7 +94,7 @@ const FoodType = () => {
             // Handle the error scenario, display error message or take appropriate action
         }
     };
-    
+
 
     const handleReset = () => {
         setFoodDetails({
@@ -100,7 +102,7 @@ const FoodType = () => {
             amount: '',
             dateOfExpense: '',
             notes: '',
-            
+
         });
         setActiveBox(0);
         setShowCalendar(false);
@@ -110,8 +112,8 @@ const FoodType = () => {
         <View style={styles.container}>
             <StatusBar backgroundColor="#003c9e" />
             <View style={styles.header}>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Text style={{color:'red', margin:20}}>Back</Text>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                    <Image source={require('../../assets/images/arrow.png')} style={{ width: 30, height: 30, }} />
                 </TouchableOpacity>
                 <Text style={styles.headerText}>Food Type</Text>
             </View>
@@ -211,24 +213,23 @@ const styles = StyleSheet.create({
     header: {
         backgroundColor: '#ffffff',
         height: 70,
-        // justifyContent: 'center',
         alignItems: 'center',
+        justifyContent: 'center',
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,
-        position: 'relative',
         elevation: 5,
-        flexDirection:'row',
-        justifyContent:'flex-start',
-        textAlign:'center',
-       
+        flexDirection: 'row',
+        paddingHorizontal: '2%',
+    },
+    backButton: {
+        position: 'absolute',
+        left: 18,
+        zIndex: 1,
     },
     headerText: {
-        fontSize: 18,
+        fontSize: width > 360 ? 18 : 16,
         fontWeight: 'bold',
         color: '#000',
-        margin:'2%',
-        marginLeft:'20%'
-        
     },
     heading: {
         fontSize: 16,

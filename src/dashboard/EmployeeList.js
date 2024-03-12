@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, StatusBar, ScrollView, Image, TextInput, Pressable, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, ScrollView, Image, TextInput, Pressable, TouchableOpacity,Dimensions } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+
+const { width } = Dimensions.get('window');
 
 const EmployeeList = () => {
     const navigation = useNavigation();
@@ -47,8 +49,8 @@ const EmployeeList = () => {
             <StatusBar backgroundColor="#003c9e" />
             <View style={styles.header}>
                 <View>
-                    <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-                        <Image source={require('../../assets/images/menu.png')} style={{ width: 24, height: 20, marginLeft: 30 }} />
+                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                        <Image source={require('../../assets/images/arrow.png')} style={{ width: 30, height: 30, }} />
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.headerText}>View Employee List</Text>
@@ -128,20 +130,23 @@ const styles = StyleSheet.create({
     header: {
         backgroundColor: '#ffffff',
         height: 70,
-        justifyContent: 'flex-start',
         alignItems: 'center',
+        justifyContent: 'center',
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,
-        borderColor: '#dade04',
-        borderBottomWidth: 5,
-        marginBottom: 8,
-        flexDirection: 'row'
+        elevation: 5,
+        flexDirection: 'row',
+        paddingHorizontal: '2%',
+    },
+    backButton: {
+        position: 'absolute',
+        left: 18,
+        zIndex: 1,
     },
     headerText: {
-        fontSize: 18,
+        fontSize: width > 360 ? 18 : 16,
         fontWeight: 'bold',
         color: '#000',
-        marginLeft: 50
     },
     section1: {
         flexDirection: 'row',

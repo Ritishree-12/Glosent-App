@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, StatusBar, ScrollView, Pressable, Image, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, ScrollView, Pressable, Image, ActivityIndicator, TouchableOpacity,Dimensions } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+
+const { width } = Dimensions.get('window');
 
 const ExpensesReport = () => {
+   
+
+    const navigation = useNavigation();
     const [expensesData, setExpensesData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -18,9 +24,9 @@ const ExpensesReport = () => {
                         Authorization: `Bearer ${authToken}`,
                     },
                 });
-                console.log('report data updated **********************',response)
+                console.log('report data updated **********************', response)
                 const data = response.data.data;
-                setExpensesData(data.expenseData); 
+                setExpensesData(data.expenseData);
                 setTotalAmount(data.totalAmount);
                 setLoading(false);
             } catch (error) {
@@ -55,6 +61,9 @@ const ExpensesReport = () => {
         <View style={styles.container}>
             <StatusBar backgroundColor="#003c9e" />
             <View style={styles.header}>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                <Image source={require('../../assets/images/arrow.png')} style={{width:30,height:30,}}/>
+                </TouchableOpacity>
                 <Text style={styles.headerText}>Expenses Report</Text>
             </View>
 
@@ -135,16 +144,21 @@ const styles = StyleSheet.create({
     header: {
         backgroundColor: '#ffffff',
         height: 70,
-        justifyContent: 'center',
         alignItems: 'center',
+        justifyContent: 'center',
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,
-        position: 'relative',
         elevation: 5,
-
+        flexDirection: 'row',
+        paddingHorizontal: '2%', 
+    },
+    backButton: {
+        position: 'absolute', 
+        left: 18,
+        zIndex: 1, 
     },
     headerText: {
-        fontSize: 18,
+        fontSize: width > 360 ? 18 : 16, 
         fontWeight: 'bold',
         color: '#000',
     },
@@ -179,7 +193,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         alignItems: 'center',
         justifyContent: 'center',
-        height:22
+        height: 22
     },
     section2BtnText: {
         color: '#fff',

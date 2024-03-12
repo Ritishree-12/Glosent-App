@@ -1,6 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+
+const { width } = Dimensions.get('window');
+
 
 
 const ExpensesEntry = () => {
@@ -10,8 +13,8 @@ const ExpensesEntry = () => {
         <View style={styles.container}>
             <StatusBar backgroundColor="#003c9e" />
             <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Text style={{color:'red', margin:20}}>Back</Text>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                    <Image source={require('../../assets/images/arrow.png')} style={{ width: 30, height: 30, }} />
                 </TouchableOpacity>
                 <Text style={styles.headerText}>Expenses Entry</Text>
             </View>
@@ -91,24 +94,23 @@ const styles = StyleSheet.create({
     header: {
         backgroundColor: '#ffffff',
         height: 70,
-        // justifyContent: 'center',
         alignItems: 'center',
+        justifyContent: 'center',
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,
-        position: 'relative',
         elevation: 5,
-        flexDirection:'row',
-        justifyContent:'flex-start',
-        textAlign:'center',
-       
+        flexDirection: 'row',
+        paddingHorizontal: '2%',
+    },
+    backButton: {
+        position: 'absolute',
+        left: 18,
+        zIndex: 1,
     },
     headerText: {
-        fontSize: 18,
+        fontSize: width > 360 ? 18 : 16,
         fontWeight: 'bold',
         color: '#000',
-        margin:'2%',
-        marginLeft:50
-        
     },
     section1: {
         backgroundColor: '#1a50a7',

@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Image, ScrollView, Alert } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Image, ScrollView, Alert, Dimensions } from 'react-native';
 import { Input } from 'react-native-elements';
 import { Calendar } from 'react-native-calendars';
 import { launchCamera } from 'react-native-image-picker';
 import DocumentPicker from 'react-native-document-picker';
-import axios from 'axios'; // Import Axios
+import axios from 'axios'; 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+
+const { width } = Dimensions.get('window');
 
 const AccommodationType = () => {
+    const navigation = useNavigation();
     const [activeBox, setActiveBox] = useState(0);
     const [showCalendar, setShowCalendar] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
@@ -42,7 +46,7 @@ const AccommodationType = () => {
     const handleSubmit = async () => {
         // navigation.goBack();
         const data = {
-            subExpenseType: activeBox ===0 ? 'Hotel':'Rent',
+            subExpenseType: activeBox === 0 ? 'Hotel' : 'Rent',
             // activeBox === 1 ? 'Rent':
             //  activeBox === 2 ? 'Bus':'Train',
             amount: accommodationDetails.amount,
@@ -95,7 +99,7 @@ const AccommodationType = () => {
             // Handle the error scenario, display error message or take appropriate action
         }
     };
-    
+
 
     const handlePhotoPicker = () => {
         const options = {
@@ -136,6 +140,9 @@ const AccommodationType = () => {
         <View style={styles.container}>
             <StatusBar backgroundColor="#003c9e" />
             <View style={styles.header}>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                    <Image source={require('../../assets/images/arrow.png')} style={{ width: 30, height: 30, }} />
+                </TouchableOpacity>
                 <Text style={styles.headerText}>Accommodations</Text>
             </View>
 
@@ -244,17 +251,21 @@ const styles = StyleSheet.create({
     header: {
         backgroundColor: '#ffffff',
         height: 70,
-        justifyContent: 'center',
         alignItems: 'center',
+        justifyContent: 'center',
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,
-        borderColor: '#b9ce19',
-        borderBottomWidth: 5,
-        position: 'relative',
         elevation: 5,
+        flexDirection: 'row',
+        paddingHorizontal: '2%',
+    },
+    backButton: {
+        position: 'absolute',
+        left: 18,
+        zIndex: 1,
     },
     headerText: {
-        fontSize: 18,
+        fontSize: width > 360 ? 18 : 16,
         fontWeight: 'bold',
         color: '#000',
     },
