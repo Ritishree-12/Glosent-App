@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
         borderRadius: width * 0.1,
         borderWidth: 1,
         borderColor: '#fff',
-        width: width * 0.25,
+        width: width * 0.23,
         alignItems: 'center',
     },
     selectedUserTypeButton: {

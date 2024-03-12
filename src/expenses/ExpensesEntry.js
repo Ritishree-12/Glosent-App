@@ -109,7 +109,6 @@ const styles = StyleSheet.create({
         margin: 10,
         paddingVertical: 16,
         paddingHorizontal:10,
-        alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
         flexWrap: 'wrap',
@@ -125,13 +124,12 @@ const styles = StyleSheet.create({
     },
     boxContainer: {
         flexDirection: 'row',
+        width:'100%',
+        justifyContent:'center'
 
     },
     boxContainer2: {
         flexDirection: 'row',
-        // justifyContent:'flex-start',
-        alignItems:'flex-start'
-
     },
     box: {
         width: 70,
