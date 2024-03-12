@@ -7,6 +7,7 @@ const ExpensesReport = () => {
     const [expensesData, setExpensesData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [totalAmount, setTotalAmount] = useState(0);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -20,6 +21,7 @@ const ExpensesReport = () => {
                 console.log('report data updated **********************',response)
                 const data = response.data.data;
                 setExpensesData(data.expenseData); 
+                setTotalAmount(data.totalAmount);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching expenses data:', error);
@@ -57,8 +59,8 @@ const ExpensesReport = () => {
             </View>
 
             <View style={styles.section1}>
-                <Text style={{ color: '#fff', fontWeight: 'bold' }}>Total Expenses: {expensesData.length}</Text>
-                {/* <Text style={{ color: '#fff', fontWeight: 'bold' }}>Total Expenses: {expensesData.totalAmount}</Text> */}
+                {/* <Text style={{ color: '#fff', fontWeight: 'bold' }}>Total Expenses: {expensesData.length}</Text> */}
+                <Text style={{ color: '#fff', fontWeight: 'bold' }}>Total Amount: {totalAmount}</Text>
                 <Pressable style={styles.section1Btn}>
                     <Text style={styles.section1BtnText}>Download statement</Text>
                 </Pressable>

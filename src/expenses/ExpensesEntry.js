@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+
 const ExpensesEntry = () => {
     const navigation = useNavigation();
 
@@ -9,6 +10,9 @@ const ExpensesEntry = () => {
         <View style={styles.container}>
             <StatusBar backgroundColor="#003c9e" />
             <View style={styles.header}>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Text style={{color:'red', margin:20}}>Back</Text>
+                </TouchableOpacity>
                 <Text style={styles.headerText}>Expenses Entry</Text>
             </View>
 
@@ -51,7 +55,7 @@ const ExpensesEntry = () => {
                         </TouchableOpacity>
                         <Text style={styles.title}>user</Text>
                     </View>
-                    
+
                     {/* <View>
                         <TouchableOpacity onPress={() => navigation.navigate('EmployeeList')}>
                             <View style={styles.box}>
@@ -68,10 +72,10 @@ const ExpensesEntry = () => {
                         </TouchableOpacity>
                         <Text style={styles.title}>Food</Text>
                     </View> */}
-                    
+
 
                 </View>
-                
+
             </View>
         </View>
     )
@@ -87,17 +91,24 @@ const styles = StyleSheet.create({
     header: {
         backgroundColor: '#ffffff',
         height: 70,
-        justifyContent: 'center',
+        // justifyContent: 'center',
         alignItems: 'center',
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,
         position: 'relative',
         elevation: 5,
+        flexDirection:'row',
+        justifyContent:'flex-start',
+        textAlign:'center',
+       
     },
     headerText: {
         fontSize: 18,
         fontWeight: 'bold',
         color: '#000',
+        margin:'2%',
+        marginLeft:50
+        
     },
     section1: {
         backgroundColor: '#1a50a7',
@@ -108,14 +119,14 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         margin: 10,
         paddingVertical: 16,
-        paddingHorizontal:10,
+        paddingHorizontal: 10,
         justifyContent: 'center',
         flexDirection: 'row',
         flexWrap: 'wrap',
-        width:'90%',
-        alignSelf:'center'
+        width: '90%',
+        alignSelf: 'center'
     },
-    
+
     heading: {
         fontSize: 18,
         fontWeight: 'bold',
@@ -124,8 +135,8 @@ const styles = StyleSheet.create({
     },
     boxContainer: {
         flexDirection: 'row',
-        width:'100%',
-        justifyContent:'center'
+        width: '100%',
+        justifyContent: 'center'
 
     },
     boxContainer2: {

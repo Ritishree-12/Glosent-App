@@ -50,7 +50,7 @@ const Login = () => {
             axios.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
             Alert.alert('Login Successful');
             navigation.navigate(screenName);
-         console.log('data of logIn@@@@@@@@@@@@@@@@', response)
+         console.log('data of logIn @@@@@@@@@@@@@@@@', response)
         } catch (error) {
             console.error('Login Error:', error);
             if (error.response && error.response.data) {

@@ -33,7 +33,7 @@ const HomeScreen = () => {
         <View style={styles.boxWrapper}>
           <TouchableOpacity onPress={() => navigation.navigate('ExpensesReport')}>
             <View style={styles.box}>
-              <Image source={require('../../assets/images/transaction1.png')} style={styles.icon} />
+              <Image source={require('../../assets/images/transaction1.png')} style={styles.icon1} />
             </View>
           </TouchableOpacity>
           <Text style={styles.title}>Expenses Report</Text>
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   boxContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: width * 0.1,
+    // paddingHorizontal: width * 0,
   },
   boxWrapper: {
     flex: 1,
@@ -88,8 +88,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   icon: {
+    width: '58%',
+    height: '58%',
+  },
+  icon1: {
     width: '50%',
-    height: '50%',
+    height: '59%',
   },
   title: {
     color: '#fff',
