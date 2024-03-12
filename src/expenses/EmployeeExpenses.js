@@ -11,11 +11,11 @@ export default function EmployeeExpenses() {
     const getStatusColor = (status) => {
         switch (status) {
             case 'approved':
-                return '#22BB33'; // Green color for Approved
+                return '#22BB33';
             case 'pending':
-                return '#FFC300'; // Yellow color for Pending
+                return '#FFC300';
             case 'rejected':
-                return 'red'; // Red color for Rejected
+                return 'red';
         }
     }
     useEffect(() => {
@@ -28,20 +28,20 @@ export default function EmployeeExpenses() {
                     },
                 });
                 const data = response.data.data;
-                console.log('report data****************************', data)
+                console.log('expeses data****************************', data)
                 setExpensesData(data.expenses);
                 setFilteredExpenses(data.expenses);
-                //setLoading(false);
+            
             } catch (error) {
                 console.error('Error fetching expenses data:', error);
                 setError(error.message);
-                //setLoading(false);
+               
             }
         };
         fetchDataEmpl();
     }, [])
     useEffect(() => {
-        filterExpenses(); // Filter expenses when selectedStatus changes
+        filterExpenses();
     }, [selectedStatus]);
     const filterExpenses = () => {
         if (selectedStatus === 'all') {
@@ -164,16 +164,12 @@ const styles = StyleSheet.create({
     searchIcon: {
         width: 20,
         height: 20,
-        // marginRight: 10,
         tintColor: 'white',
     },
     filterIconContainer: {
         flexDirection: 'row',
         width: '18%',
         height: 40,
-        // marginLeft: 10,
-        //justifyContent: 'space-between',
-        //backgroundColor: 'white',
         alignSelf: 'center',
         alignItems: 'flex-end'
     },
@@ -190,8 +186,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
-        // marginBottom: 3,
-        // paddingHorizontal: 8,
         height: 20,
         marginLeft: 5
     },
@@ -200,14 +194,12 @@ const styles = StyleSheet.create({
         fontSize: 10,
         paddingHorizontal: 5,
         fontWeight: 'bold',
-        // justifyContent: 'center',
-        // alignSelf: 'center',
     },
     section2BtnImage: {
-        width: 15,
+        width: 10,
         height: 15,
-        //marginRight: 5,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        padding:10
     },
     section2BtnImage1: {
         width: 10,
@@ -217,12 +209,14 @@ const styles = StyleSheet.create({
     },
     itemContainer: {
         justifyContent: 'space-between',
-        padding: 10,
+        // padding: 10,
         width: '95%',
         backgroundColor: '#1A50A7',
         alignSelf: 'center',
         borderRadius: 10,
         marginTop: 5,
+        paddingVertical:10,
+        paddingHorizontal:10
     },
     infoContainer: {
         flexDirection: 'row',
@@ -230,6 +224,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: 'white',
         marginTop: 2,
+        paddingVertical:5
     },
     infoText: {
         marginBottom: 5,
@@ -252,9 +247,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         color: 'white',
+        paddingVertical:10
     },
     leftBorder: {
         borderLeftWidth: 1,
         borderLeftColor: 'grey',
+        // alignItems:'center'
+        // margin:2
     },
 });

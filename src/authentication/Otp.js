@@ -1,11 +1,12 @@
 import React, { useState, useRef } from 'react';
 import { View, TextInput, StyleSheet, Text, Pressable, Alert } from 'react-native';
 import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const OTPScreen = ({ navigation }) => { // Pass navigation as props
+const OTPScreen = ({ navigation }) => { 
   const [otp, setOTP] = useState(['', '', '', '']);
   const inputRefs = useRef([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleOTPChange = (index, value) => {
     if (/^\d{0,1}$/.test(value)) {
@@ -13,23 +14,26 @@ const OTPScreen = ({ navigation }) => { // Pass navigation as props
       updatedOTP[index] = value;
       setOTP(updatedOTP);
       
-      // Move focus to the next input field
       if (value !== '' && index < otp.length - 1) {
         inputRefs.current[index + 1].focus();
       }
 
-      // Move focus to the previous input field on backspace if the current input is empty
       if (value === '' && index > 0) {
         inputRefs.current[index - 1].focus();
       }
     }
   };
+
   const handleSubmit = async () => {
     try {
+      if (otp.some(digit => digit === '')) {
+        Alert.alert('Error', 'Please fill all OTP fields.');
+        return;
+      }
+  
       const enteredOTP = otp.join('');
       console.log('Submitting OTP:', enteredOTP);
-
-      // Retrieve bearer token from AsyncStorage
+  
       const authToken = await AsyncStorage.getItem('authToken');
       const response = await axios.post(
         'http://46.28.44.174:5001/v1/employee/verifyOtp',
@@ -40,22 +44,27 @@ const OTPScreen = ({ navigation }) => { // Pass navigation as props
           }
         }
       );
-
+  
       console.log('OTP Verification Response:', response.data);
-
-      // Handle success response
-      if (response.data.status==='1') {
+  
+      if (response.data.status === '1') {
         Alert.alert('Success', 'OTP verified successfully');
+        setIsLoggedIn(true);
         navigation.navigate('Home');
       } else {
-        Alert.alert('Error', 'Failed to verify OTP. Please try again.');
+        Alert.alert('Error', 'Incorrect OTP. Please enter the correct OTP.');
+
+        setOTP(['', '', '', '']);
+        inputRefs.current[0].focus();
       }
     } catch (error) {
-      // Handle error
       console.error('OTP Verification Error:', error);
       Alert.alert('Error', 'Failed to verify OTP. Please try again.');
     }
   };
+  
+  
+  
 
   return (
     <View style={styles.container}>
@@ -102,7 +111,6 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     width: '16%',
-    borderColor: 'gray',
     borderWidth: 1,
     paddingHorizontal: 10,
     textAlign: 'center',
