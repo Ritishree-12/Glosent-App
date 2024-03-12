@@ -42,7 +42,7 @@ const ExpensesEntry = () => {
                         <Text style={styles.title}>Accomodation</Text>
                     </View>
                 </View>
-                <View style={styles.boxContainer}>
+                <View style={styles.boxContainer2}>
                     <View>
                         <TouchableOpacity onPress={() => navigation.navigate('EmployeeList')}>
                             <View style={styles.box}>
@@ -91,8 +91,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,
-        // borderColor: '#b9ce19',
-        // borderBottomWidth: 5,
         position: 'relative',
         elevation: 5,
     },
@@ -104,8 +102,6 @@ const styles = StyleSheet.create({
     section1: {
         backgroundColor: '#1a50a7',
         borderRadius: 10,
-        margin: 10,
-        padding: 20
     },
     section2: {
         backgroundColor: '#1a50a7',
@@ -114,9 +110,11 @@ const styles = StyleSheet.create({
         paddingVertical: 16,
         paddingHorizontal:10,
         alignItems: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         flexDirection: 'row',
         flexWrap: 'wrap',
+        width:'90%',
+        alignSelf:'center'
     },
     
     heading: {
@@ -127,7 +125,13 @@ const styles = StyleSheet.create({
     },
     boxContainer: {
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+
+    },
+    boxContainer2: {
+        flexDirection: 'row',
+        // justifyContent:'flex-start',
+        alignItems:'flex-start'
+
     },
     box: {
         width: 70,
