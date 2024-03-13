@@ -2,7 +2,7 @@ import { StatusBar, StyleSheet, Text, View, TouchableOpacity, Image, Dimensions 
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 
-const ManagerDashboard = () => {
+const AdminDashboard = () => {
     const navigation = useNavigation();
 
     return (
@@ -10,7 +10,7 @@ const ManagerDashboard = () => {
             <StatusBar backgroundColor="#003c9e" />
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.toggleDrawer()} style={styles.backButton}>
-                    <Image source={require('../../assets/images/menu.png')} style={{ width: 24, height: 24, color:'#003c9d' }} />
+                    <Image source={require('../../assets/images/menu.png')} style={{ width: 24, height: 24}} />
                 </TouchableOpacity>
                 <Text style={styles.headerText}>Admin Dashboard</Text>
             </View>
@@ -37,7 +37,7 @@ const ManagerDashboard = () => {
             <View style={styles.boxContainer}>
                
                 <View>
-                    <TouchableOpacity onPress={() => navigation.navigate('ExpenseEntriesManager')} style={styles.box}>
+                    <TouchableOpacity onPress={() => navigation.navigate('AdminEmpExpenses')} style={styles.box}>
                         <Image source={require('../../assets/images/expenses1.png')} style={styles.boxIcon} />
                     </TouchableOpacity>
                     <Text style={styles.title}>Employee Expenses</Text>
@@ -91,7 +91,7 @@ const ManagerDashboard = () => {
     );
 };
 
-export default ManagerDashboard;
+export default AdminDashboard;
 
 const { width } = Dimensions.get('window');
 const boxSize = (width - 80) / 3;

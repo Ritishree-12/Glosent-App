@@ -1,13 +1,15 @@
-import { StyleSheet, Text, View, StatusBar, TextInput, Pressable, Image, FlatList } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, StatusBar, TextInput, Pressable, Image, FlatList } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-export default function EmployeeExpenses() {
+
+export default function AdminEmpExpenses() {
+    const [employeeData, setEmployeeData] = useState([]);
     const [expensesData, setExpensesData] = useState([]);
     const [error, setError] = useState(null);
     const [filteredExpenses, setFilteredExpenses] = useState([]);
     const [selectedStatus, setSelectedStatus] = useState('all');
+
     const getStatusColor = (status) => {
         switch (status) {
             case 'approved':
@@ -16,33 +18,38 @@ export default function EmployeeExpenses() {
                 return '#FFC300'; // Yellow color for Pending
             case 'rejected':
                 return 'red'; // Red color for Rejected
+            default:
+                return '#FFFFFF'; // Default white color
         }
-    }
+    };
+
     useEffect(() => {
         const fetchDataEmpl = async () => {
             try {
                 const authToken = await AsyncStorage.getItem('authToken');
-                const response = await axios.get('http://46.28.44.174:5001/admin/expense/AllEmloyeeExpenseReportList', {
+                const response = await axios.get('http://46.28.44.174:5001/admin/expense/AllEmployeeExpense', {
                     headers: {
-                         Authorization: `Bearer ${authToken}`,
+                        Authorization: `Bearer ${authToken}`,
                     },
                 });
-                const data = response.data.data;
-                console.log('report data****************************', data)
-                setExpensesData(data.expenses);
-                setFilteredExpenses(data.expenses);
-                //setLoading(false);
+                const { employeeData, expenses } = response.data.data;
+                console.log('admin all employees expense data:', employeeData);
+                console.log('all expenses data:', expenses);
+                setEmployeeData(employeeData);
+                setExpensesData(expenses);
+                setFilteredExpenses(expenses);
             } catch (error) {
                 console.error('Error fetching expenses data:', error);
                 setError(error.message);
-                //setLoading(false);
             }
         };
         fetchDataEmpl();
-    }, [])
+    }, []);
+
     useEffect(() => {
         filterExpenses(); // Filter expenses when selectedStatus changes
     }, [selectedStatus]);
+
     const filterExpenses = () => {
         if (selectedStatus === 'all') {
             setFilteredExpenses(expensesData);
@@ -51,12 +58,11 @@ export default function EmployeeExpenses() {
             setFilteredExpenses(filtered);
         }
     };
+
     const renderItem = ({ item }) => (
         <View style={styles.itemContainer}>
             <View style={styles.infoContainer}>
                 <Text style={styles.infoText}>{item.employeeId?.personalInformation.firstName} {item.employeeId?.personalInformation.middleName} {item.employeeId?.personalInformation.lastName} - {item.employeeId?.emplyId}</Text>
-                {/* <Text style={styles.infoText}>{item.EmployeeId}</Text> */}
-                {/* <Text style={[styles.infoText1,styles.section2Btn, { color: getStatusColor(item.status) }]}>{item.status}</Text> */}
                 <Pressable style={[styles.section2Btn, { backgroundColor: getStatusColor(item.status) }]}>
                     {item.status === 'approved' && <Image style={styles.section2BtnImage} source={require('../../assets/images/approve.png')} />}
                     {item.status === 'pending' && <Image style={styles.section2BtnImage} source={require('../../assets/images/pending.png')} />}
@@ -66,24 +72,21 @@ export default function EmployeeExpenses() {
                 <Text style={styles.infoText}>Total ₹: {item.totalExpenseAmount?.totalAmount}</Text>
             </View>
             <View style={styles.detailsContainer}>
-            <View style={{ width: '30%', alignSelf: 'center', justifyContent: 'flex-start' }}>
-                <Text numberOfLines={1} style={styles.infoText1}>Date: {item.dateOfExpense}</Text>
+                <View style={{ width: '30%', alignSelf: 'center', justifyContent: 'flex-start' }}>
+                    <Text numberOfLines={1} style={styles.infoText1}>Date: {item.dateOfExpense}</Text>
+                </View>
+                <View style={styles.leftBorder}>
+                    <Text style={styles.infoText2}>Expense Type: {item.expenseType}</Text>
+                    <Text style={styles.infoText}>Amount: ₹{item.amount}</Text>
+                </View>
+                <View style={styles.leftBorder}>
+                    <Text style={styles.infoText2}>Sub Expense Type: {item.subExpenseType}</Text>
+                    <Text style={styles.infoText}>Notes: {item.notes}</Text>
+                </View>
             </View>
-            <View style={styles.leftBorder}>
-                <Text style={styles.infoText2}>Food</Text>
-                {item.expenseType === 'food' && <Text style={styles.infoText}>{item.amount}</Text>}
-            </View>
-            <View style={styles.leftBorder}>
-                <Text style={styles.infoText2}>Accommodation</Text>
-                {item.expenseType === 'accommodation' && <Text style={styles.infoText}>{item.amount}</Text>}
-            </View>
-            <View style={styles.leftBorder}>
-                <Text style={styles.infoText2}>Transportation</Text>
-                {item.expenseType === 'transportation' && <Text style={styles.infoText}>{item.amount}</Text>}
-            </View>
-        </View>
         </View>
     );
+
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor="#003C9E" />
@@ -100,17 +103,17 @@ export default function EmployeeExpenses() {
                     />
                 </View>
                 <View style={styles.filterIconContainer}>
-                    <Pressable style={[styles.section2Btn1, selectedStatus === 'approved', { backgroundColor: 'red' }]}
+                    <Pressable style={[styles.section2Btn1, selectedStatus === 'rejected' && { backgroundColor: 'red' }]}
                         onPress={() => setSelectedStatus('rejected')}>
                         <Image style={styles.section2BtnImage1} source={require('../../assets/images/cancel.png')} />
                         <Text style={styles.section2BtnText}>Rejected</Text>
                     </Pressable>
-                    <Pressable style={[styles.section2Btn1,selectedStatus === 'pending', { backgroundColor: '#FFC300' }]}
+                    <Pressable style={[styles.section2Btn1, selectedStatus === 'pending' && { backgroundColor: '#FFC300' }]}
                         onPress={() => setSelectedStatus('pending')}>
                         <Image style={styles.section2BtnImage} source={require('../../assets/images/pending.png')} />
                         <Text style={styles.section2BtnText}>Pending</Text>
                     </Pressable>
-                    <Pressable style={[styles.section2Btn1,selectedStatus === 'rejected', { backgroundColor: '#22BB33' }]}
+                    <Pressable style={[styles.section2Btn1, selectedStatus === 'approved' && { backgroundColor: '#22BB33' }]}
                         onPress={() => setSelectedStatus('approved')}>
                         <Image style={styles.section2BtnImage} source={require('../../assets/images/approve.png')} />
                         <Text style={styles.section2BtnText}>Approved</Text>
@@ -125,6 +128,7 @@ export default function EmployeeExpenses() {
         </View>
     );
 }
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -152,7 +156,6 @@ const styles = StyleSheet.create({
         marginTop: 10,
         borderBottomColor: 'white',
         width: '35%',
-        //backgroundColor:'white'
     },
     input: {
         borderBottomWidth: 1,
@@ -164,16 +167,12 @@ const styles = StyleSheet.create({
     searchIcon: {
         width: 20,
         height: 20,
-        // marginRight: 10,
         tintColor: 'white',
     },
     filterIconContainer: {
         flexDirection: 'row',
         width: '18%',
         height: 40,
-        // marginLeft: 10,
-        //justifyContent: 'space-between',
-        //backgroundColor: 'white',
         alignSelf: 'center',
         alignItems: 'flex-end'
     },
@@ -190,8 +189,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
-        // marginBottom: 3,
-        // paddingHorizontal: 8,
         height: 20,
         marginLeft: 5
     },
@@ -200,19 +197,15 @@ const styles = StyleSheet.create({
         fontSize: 10,
         paddingHorizontal: 5,
         fontWeight: 'bold',
-        // justifyContent: 'center',
-        // alignSelf: 'center',
     },
     section2BtnImage: {
         width: 15,
         height: 15,
-        //marginRight: 5,
         alignSelf: 'center'
     },
     section2BtnImage1: {
         width: 10,
         height: 10,
-        //marginRight: 5,
         alignSelf: 'center'
     },
     itemContainer: {
@@ -241,7 +234,6 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         color: 'white',
         fontSize: 10,
-        //alignSelf: 'center',
     },
     infoText2: {
         color: 'yellow',

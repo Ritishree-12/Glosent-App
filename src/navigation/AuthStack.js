@@ -20,13 +20,13 @@ import ApproveExpenses from '../expenses/ApproveExpenses';
 import TransactionHistory from '../expenses/TransactionHistory';
 import AdminEmployeeList from '../admin/AdminEmployeeList';
 import ManagerList from '../admin/ManagerList';
-import AdminEmpExpensesReport from '../admin/AdminEmpExpenses';
 import ManagerFoodType from '../manager/managerExpenses/ManagerFoodType';
 import ManagerAccommodationType from '../manager/managerExpenses/ManagerAccommodationType';
 import ManagerTransportationType from '../manager/managerExpenses/ManagerTransportExpenses';
 import ExpenseEntriesManager from '../manager/managerExpenses/ExpenseEntriesManager';
 import ManagerExpenseReport from '../manager/expesesReport/ManagerExpenseReport';
 import AdminMngTransHistory from '../admin/AdminMngTransHistory';
+import AdminEmpExpenses from '../admin/AdminEmpExpenses';
 
 const Stack = createNativeStackNavigator();
 
@@ -124,8 +124,8 @@ const AuthStack = () => {
                     options={{ headerShown: false }}
                 />
                  <Stack.Screen
-                    name="AdminEmpExpensesReport"
-                    component={AdminEmpExpensesReport}
+                    name="AdminEmpExpenses"
+                    component={AdminEmpExpenses}
                     options={{ headerShown: false }}
                 />
                  <Stack.Screen

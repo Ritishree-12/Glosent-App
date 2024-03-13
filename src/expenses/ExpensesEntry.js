@@ -143,7 +143,8 @@ const styles = StyleSheet.create({
     },
     boxContainer2: {
         flexDirection: 'row',
-        // justifyContent: 'flex-start'
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start', 
     },
     box: {
         width: 70,
