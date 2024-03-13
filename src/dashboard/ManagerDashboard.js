@@ -1,7 +1,6 @@
-import { StatusBar, StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import { StatusBar, StyleSheet, Text, View, TouchableOpacity, Image, Dimensions } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-
 
 const ManagerDashboard = () => {
     const navigation = useNavigation();
@@ -10,134 +9,85 @@ const ManagerDashboard = () => {
         <View style={styles.container}>
             <StatusBar backgroundColor="#003c9e" />
             <View style={styles.header}>
-                <View>
-                    <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-                        <Image source={require('../../assets/images/menu.png')} style={{ width: 24, height: 24, marginLeft: 30 }} />
-                    </TouchableOpacity>
-                </View>
-                <View>
-                    <Text style={styles.headerText}>Manager Dashboard</Text>
-                </View>
-
-
+                <TouchableOpacity onPress={() => navigation.toggleDrawer()} style={styles.backButton}>
+                    <Image source={require('../../assets/images/menu.png')} style={{ width: 24, height: 24, color:'#003c9d' }} />
+                </TouchableOpacity>
+                <Text style={styles.headerText}>Manager Dashboard</Text>
             </View>
-
             <View style={styles.boxContainer}>
                 <View>
-                    <TouchableOpacity onPress={() => navigation.navigate('EmployeeList')}>
-                        <View style={styles.box}>
-                            <Image source={require('../../assets/images/user.png')} style={{ width: 56, height: 56 }} />
-                        </View>
+                    <TouchableOpacity onPress={() => navigation.navigate('EmployeeList')} style={styles.box}>
+                        <Image source={require('../../assets/images/user.png')} style={styles.boxIcon} />
                     </TouchableOpacity>
                     <Text style={styles.title}>Employee List</Text>
                 </View>
                 <View>
-                    <TouchableOpacity onPress={() => navigation.navigate('EmployeeExpenses')}>
-                        <View style={styles.box}>
-                            <Image source={require('../../assets/images/expenses1.png')} style={{ width: 56, height: 56 }} />
-                        </View>
+                    <TouchableOpacity onPress={() => navigation.navigate('EmployeeExpenses')} style={styles.box}>
+                        <Image source={require('../../assets/images/expenses1.png')} style={styles.boxIcon} />
                     </TouchableOpacity>
                     <Text style={styles.title}>Employee Expenses</Text>
                 </View>
                 <View>
-                    <TouchableOpacity onPress={() => navigation.navigate('ApproveExpenses')}>
-                        <View style={styles.box}>
-                            <Image source={require('../../assets/images/rupees.png')} style={{ width: 54, height: 54 }} />
-                        </View>
+                    <TouchableOpacity onPress={() => navigation.navigate('ApproveExpenses')} style={styles.box}>
+                        <Image source={require('../../assets/images/rupees.png')} style={styles.boxIcon} />
                     </TouchableOpacity>
                     <Text style={styles.title}>Approve Expenses</Text>
                 </View>
-
             </View>
-            <View style={styles.boxContainer2}>
+            <View style={styles.boxContainer}>
                 <View>
-                    <TouchableOpacity onPress={() => navigation.navigate('TransactionHistory')}>
-                        <View style={styles.box}>
-                            <Image source={require('../../assets/images/notification.png')} style={{ width: 56, height: 56 }} />
-                        </View>
+                    <TouchableOpacity onPress={() => navigation.navigate('TransactionHistory')} style={styles.box}>
+                        <Image source={require('../../assets/images/notification.png')} style={styles.boxIcon} />
                     </TouchableOpacity>
                     <Text style={styles.title}>Send Notification</Text>
                 </View>
                 <View>
-                    <TouchableOpacity onPress={() => navigation.navigate('ExpenseEntriesManager')}>
-                        <View style={styles.box}>
-                            <Image source={require('../../assets/images/expenses1.png')} style={{ width: 56, height: 56 }} />
-                        </View>
+                    <TouchableOpacity onPress={() => navigation.navigate('ExpenseEntriesManager')} style={styles.box}>
+                        <Image source={require('../../assets/images/expenses1.png')} style={styles.boxIcon} />
                     </TouchableOpacity>
-                    <Text style={styles.title}>Expenses Entry</Text>
+                    <Text style={styles.title}>Manager Expenses Entry</Text>
                 </View>
                 <View>
-                    <TouchableOpacity onPress={() => navigation.navigate('TransactionHistory')}>
-                        <View style={styles.box}>
-                            <Image source={require('../../assets/images/transaction.png')} style={{ width: 54, height: 54 }} />
-                        </View>
+                    <TouchableOpacity onPress={() => navigation.navigate('TransactionHistory')} style={styles.box}>
+                        <Image source={require('../../assets/images/transaction.png')} style={styles.boxIcon} />
                     </TouchableOpacity>
                     <Text style={styles.title}>Transaction History</Text>
                 </View>
-
-                
-
             </View>
-            <View style={styles.boxContainer2}>
+            <View style={styles.boxContainer}>
                 <View>
-                    <TouchableOpacity onPress={() => navigation.navigate('ManagerExpenseReport')}>
-                        <View style={styles.box}>
-                            <Image source={require('../../assets/images/notification.png')} style={{ width: 56, height: 56 }} />
-                        </View>
-                    </TouchableOpacity>
-                    <Text style={styles.title}>Manager Expense Report</Text>
-                </View>
-                {/* <View>
-                    <TouchableOpacity onPress={() => navigation.navigate('ExpenseEntriesManager')}>
-                        <View style={styles.box}>
-                            <Image source={require('../../assets/images/expenses1.png')} style={{ width: 56, height: 56 }} />
-                        </View>
-                    </TouchableOpacity>
-                    <Text style={styles.title}>Expenses Entry</Text>
-                </View> */}
-                {/* <View>
-                    <TouchableOpacity onPress={() => navigation.navigate('TransactionHistory')}>
-                        <View style={styles.box}>
-                            <Image source={require('../../assets/images/transaction.png')} style={{ width: 54, height: 54 }} />
-                        </View>
-                    </TouchableOpacity>
-                    <Text style={styles.title}>Transaction History</Text>
-                </View>
-
-                 */}
-
+                <TouchableOpacity onPress={() => navigation.navigate('ManagerExpenseReport')} style={styles.box}>
+                    <Image source={require('../../assets/images/notification.png')} style={styles.boxIcon} />            
+                </TouchableOpacity>
+                <Text style={styles.title}>Manager Expense Report</Text>
+                </View>           
             </View>
             <View style={styles.section1}>
                 <View style={styles.yellowBtn}>
+                    <Image source={require('../../assets/images/user-blue.png')} style={styles.yellowBtnIcon} />
+                    <View style={styles.verticalLine} />
                     <View>
-                        <Image source={require('../../assets/images/user-blue.png')} style={{ width: 36, height: 36, padding: 16 }} />
-                    </View>
-                    <View style={styles.verticalLine}></View>
-                    <View>
-                        <Text style={{ color: '#003d9e', fontSize: 12 }}>Total Employee</Text>
-                        <Text style={{ color: '#003d9e', fontWeight: 'bold' }}>500</Text>
+                        <Text style={styles.yellowBtnText}>Total Employee</Text>
+                        <Text style={styles.yellowBtnText}>500</Text>
                     </View>
                 </View>
-
                 <View style={styles.yellowBtn}>
+                    <Image source={require('../../assets/images/user-blue.png')} style={styles.yellowBtnIcon} />
+                    <View style={styles.verticalLine} />
                     <View>
-                        <Image source={require('../../assets/images/user-blue.png')} style={{ width: 36, height: 36, padding: 16 }} />
+                        <Text style={styles.yellowBtnText}>Total Transaction</Text>
+                        <Text style={styles.yellowBtnText}>1,12,345.00</Text>
                     </View>
-                    <View style={styles.verticalLine}></View>
-                    <View>
-                        <Text style={{ color: '#003d9e', fontSize: 12 }}>Total Transaction</Text>
-                        <Text style={{ color: '#003d9e', fontWeight: 'bold' }}>1,12,345.00</Text>
-                    </View>
-
                 </View>
             </View>
-
-
         </View>
     );
 };
 
 export default ManagerDashboard;
+
+const { width } = Dimensions.get('window');
+const boxSize = (width - 90) / 3;
 
 const styles = StyleSheet.create({
     container: {
@@ -147,52 +97,57 @@ const styles = StyleSheet.create({
     header: {
         backgroundColor: '#ffffff',
         height: 70,
-        justifyContent: 'flex-start',
         alignItems: 'center',
+        justifyContent: 'center',
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,
+        elevation: 5,
         flexDirection: 'row',
+        paddingHorizontal: '2%',
+    },
+    backButton: {
+        position: 'absolute',
+        left: 18,
+        zIndex: 1,
     },
     headerText: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: '#000',
-        marginLeft: 50
-        // alignItems:'center',
-        // justifyContent:'center'
+        color: '#003c9d',
     },
     boxContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
+        paddingHorizontal: 16,
         marginTop: 20,
     },
-    boxContainer2: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-    },
+   
     box: {
-        width: 80,
-        height: 80,
+        width: boxSize,
+        height: boxSize,
         backgroundColor: '#09b724',
         borderRadius: 15,
-        borderColor: '#fff',
-        borderWidth: 0.6,
         alignItems: 'center',
         justifyContent: 'center',
-        marginVertical: 10,
-        marginHorizontal: 10,
+        borderColor:'#fff',
+        borderWidth:1
+    },
+    boxIcon: {
+        width: boxSize * 0.6,
+        height: boxSize * 0.6,
     },
     title: {
         color: '#fff',
         fontSize: 12,
         fontWeight: 'bold',
         textAlign: 'center',
-        width: '90%',
-        alignContent: 'center'
+        marginTop: 5,
+        width:87
+        // paddingHorizontal: 10,
     },
     section1: {
         flexDirection: 'row',
-        justifyContent: 'center', // Change to space-around for equal spacing
+        justifyContent: 'center',
         marginTop: 20,
     },
     yellowBtn: {
@@ -201,16 +156,26 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        margin: 10,
+        marginHorizontal: 10,
         borderColor: '#fff',
         borderWidth: 1,
         width: 160,
-        height: 56
+        height: 56,
+    },
+    yellowBtnIcon: {
+        width: 36,
+        height: 36,
+        padding: 10,
+    },
+    yellowBtnText: {
+        color: '#003d9e',
+        fontSize: 12,
+        fontWeight: 'bold',
     },
     verticalLine: {
         width: 1,
         height: '100%',
         backgroundColor: '#C9CACB',
         marginHorizontal: 10,
-    }
+    },
 });

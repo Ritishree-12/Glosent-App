@@ -11,12 +11,10 @@ const AdminDashboard = () => {
         <View style={styles.container}>
             <StatusBar backgroundColor="#003c9e" />
             <View style={styles.header}>
-            <View>
-                    <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-                        <Image source={require('../../assets/images/menu.png')} style={{ width: 24, height: 20, marginLeft: 30 }} />
-                    </TouchableOpacity>
-                </View>
-                <Text style={styles.headerText}>Admin Dashboard</Text>
+                <TouchableOpacity onPress={() => navigation.toggleDrawer()} style={styles.backButton}>
+                    <Image source={require('../../assets/images/menu.png')} style={{ width: 24, height: 24, }} />
+                </TouchableOpacity>
+                <Text style={styles.headerText}>Approve Expenses</Text>
             </View>
 
             <View style={styles.boxContainer}>
@@ -135,22 +133,25 @@ const styles = StyleSheet.create({
         backgroundColor: '#003C9E',
     },
     header: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#ffffff',
         height: 70,
-        justifyContent: 'flex-start',
         alignItems: 'center',
+        justifyContent: 'center',
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,
-        borderColor: '#E2E733',
-        borderBottomWidth: 5,
         elevation: 5,
         flexDirection: 'row',
+        paddingHorizontal: '2%',
+    },
+    backButton: {
+        position: 'absolute',
+        left: 18,
+        zIndex: 1,
     },
     headerText: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: '#000',
-        marginLeft: 50
+        color: '#003c9d',
     },
     boxContainer: {
         flexDirection: 'row',
