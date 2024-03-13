@@ -8,6 +8,7 @@ const { width } = Dimensions.get('window');
 
 const EmployeeList = () => {
     const navigation = useNavigation();
+    
     const [employeeList, setEmployeeList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -44,16 +45,18 @@ const EmployeeList = () => {
         employee.personalInformation.lastName.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
+    const handleDelete=()=>{
+        console.log('deleted*********************')
+    }
+
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor="#003c9e" />
             <View style={styles.header}>
-                <View>
-                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                        <Image source={require('../../assets/images/arrow.png')} style={{ width: 30, height: 30, }} />
-                    </TouchableOpacity>
-                </View>
-                <Text style={styles.headerText}>View Employee List</Text>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                <Image source={require('../../assets/images/arrow.png')} style={{width:30,height:30,}}/>
+                </TouchableOpacity>
+                <Text style={styles.headerText}>Employee List</Text>
             </View>
             <View>
                 <View style={styles.section1}>
@@ -136,15 +139,15 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 20,
         elevation: 5,
         flexDirection: 'row',
-        paddingHorizontal: '2%',
+        paddingHorizontal: '2%', 
     },
     backButton: {
-        position: 'absolute',
+        position: 'absolute', 
         left: 18,
-        zIndex: 1,
+        zIndex: 1, 
     },
     headerText: {
-        fontSize: width > 360 ? 18 : 16,
+        fontSize: width > 360 ? 18 : 16, 
         fontWeight: 'bold',
         color: '#000',
     },

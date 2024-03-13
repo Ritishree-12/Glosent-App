@@ -6,8 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const { width } = Dimensions.get('window');
 
-const ExpensesReport = () => {
-
+const ManagerExpenseReport = () => {
 
     const navigation = useNavigation();
     const [expensesData, setExpensesData] = useState([]);
@@ -19,7 +18,7 @@ const ExpensesReport = () => {
         const fetchData = async () => {
             try {
                 const authToken = await AsyncStorage.getItem('authToken');
-                const response = await axios.get('http://46.28.44.174:5001/v1/expense/ExployeeExpenseReport', {
+                const response = await axios.get('http://46.28.44.174:5001/manager/expense/managerExpenseReport', {
                     headers: {
                         Authorization: `Bearer ${authToken}`,
                     },
@@ -62,7 +61,7 @@ const ExpensesReport = () => {
             <StatusBar backgroundColor="#003c9e" />
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                    <Image source={require('../../assets/images/arrow.png')} style={{ width: 30, height: 30, }} />
+                    <Image source={require('../../../assets/images/arrow.png')} style={{ width: 30, height: 30, }} />
                 </TouchableOpacity>
                 <Text style={styles.headerText}>Expenses Report</Text>
             </View>
@@ -113,7 +112,7 @@ const ExpensesReport = () => {
                             <View>
                                 <Pressable style={{ backgroundColor: '#154086', width: 100, borderRadius: 20, flexDirection: 'row', justifyContent: 'center', padding: 4 }}>
                                     <Text style={{ color: '#fff', fontSize: 11, }}>Attachments</Text>
-                                    <Image source={require('../../assets/images/approve.png')} style={{ width: 14, height: 12, justifyContent: 'center' }} />
+                                    <Image source={require('../../../assets/images/approve.png')} style={{ width: 14, height: 12, justifyContent: 'center' }} />
                                 </Pressable>
                             </View>
                         </View>
@@ -137,7 +136,7 @@ const getStatusColor = (status) => {
     }
 }
 
-export default ExpensesReport;
+export default ManagerExpenseReport;
 
 const styles = StyleSheet.create({
     container: {

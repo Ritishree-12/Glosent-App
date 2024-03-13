@@ -4,54 +4,55 @@ import { Input } from 'react-native-elements';
 import { Calendar } from 'react-native-calendars';
 import { launchCamera } from 'react-native-image-picker';
 import DocumentPicker from 'react-native-document-picker';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios'; 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
 const { width } = Dimensions.get('window');
 
-const TransportType = () => {
+const ManagerAccommodationType = () => {
     const navigation = useNavigation();
     const [activeBox, setActiveBox] = useState(0);
     const [showCalendar, setShowCalendar] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
 
-    const [transportDetails, setTransportDetails] = useState({
+    const [accommodationDetails, setAccommodationDetails] = useState({
         amount: '',
         dateOfExpense: '',
-        pickup: '',
-        drop: '',
         notes: '',
-        subExpenseType: 'Auto',
+        subExpenseType: 'Hotel',
+        checkIn: '',
+        checkOut: '',
+
     });
 
     const handleBoxPress = (index) => {
         setActiveBox(index);
     };
 
-    const handleTransportChange = (field, value) => {
-        setTransportDetails(prevState => ({
+    const handleAccommodationChange = (field, value) => {
+        setAccommodationDetails(prevState => ({
             ...prevState,
             [field]: value
         }));
     };
 
     const handleDateSelect = (date) => {
-        handleTransportChange('dateOfExpense', date.dateString);
+        handleAccommodationChange('dateOfExpense', date.dateString);
         setShowCalendar(false);
     };
 
     const handleSubmit = async () => {
         // navigation.goBack();
         const data = {
-            subExpenseType: activeBox === 0 ? 'Auto' :
-                activeBox === 1 ? 'Car' :
-                    activeBox === 2 ? 'Bus' : 'Train',
-            amount: transportDetails.amount,
-            dateOfExpense: transportDetails.dateOfExpense,
-            notes: transportDetails.notes,
-            expenseType: "transportation",
+            subExpenseType: activeBox === 0 ? 'Hotel' : 'Rent',
+            // activeBox === 1 ? 'Rent':
+            //  activeBox === 2 ? 'Bus':'Train',
+            amount: accommodationDetails.amount,
+            dateOfExpense: accommodationDetails.dateOfExpense,
+            notes: accommodationDetails.notes,
+            expenseType: "accommodation",
         };
         try {
             const authToken = await AsyncStorage.getItem('authToken');
@@ -59,7 +60,7 @@ const TransportType = () => {
                 console.error('Authentication token not found');
                 return;
             }
-            const response = await axios.post('http://46.28.44.174:5001/v1/expense/addExpense', data, {
+            const response = await axios.post('http://46.28.44.174:5001/manager/expense/managerAddExpense', data, {
                 headers: {
                     'Content-Type': 'application/json', // Corrected content type
                     Authorization: `Bearer ${authToken}`
@@ -71,7 +72,7 @@ const TransportType = () => {
                 const responseData = response.data.data;
                 console.log('Expense submitted successfully:', responseData);
                 // Clear the form fields
-                setTransportDetails({
+                setAccommodationDetails({
                     amount: '',
                     dateOfExpense: '',
                     notes: '',
@@ -135,113 +136,94 @@ const TransportType = () => {
         }
     };
 
-
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor="#003c9e" />
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                    <Image source={require('../../assets/images/arrow.png')} style={{ width: 30, height: 30, }} />
+                    <Image source={require('../../../assets/images/arrow.png')} style={{ width: 30, height: 30, }} />
                 </TouchableOpacity>
-                <Text style={styles.headerText}>Transportation</Text>
+                <Text style={styles.headerText}>Accommodations</Text>
             </View>
 
             <View style={styles.section1}>
-                <Text style={styles.heading}>Select Transportation Type</Text>
+                <Text style={styles.heading}>Select Accommodation Type</Text>
                 <View style={styles.boxContainer}>
                     <View>
                         <TouchableOpacity onPress={() => handleBoxPress(0)}>
                             <View style={[styles.box, activeBox === 0 && styles.activeBox]}>
-                                <Image source={require('../../assets/images/auto-icon.png')} style={{ width: 34, height: 32 }} />
+                                <Image source={require('../../../assets/images/breakfast-icon.png')} style={{ width: 34, height: 32 }} />
                             </View>
                         </TouchableOpacity>
-                        <Text style={styles.title}>Auto</Text>
+                        <Text style={styles.title}>Hotel</Text>
                     </View>
                     <View>
                         <TouchableOpacity onPress={() => handleBoxPress(1)}>
                             <View style={[styles.box, activeBox === 1 && styles.activeBox]}>
-                                <Image source={require('../../assets/images/car-icon.png')} style={{ width: 40, height: 40 }} />
+                                <Image source={require('../../../assets/images/lunch-icon.png')} style={{ width: 33, height: 33 }} />
                             </View>
                         </TouchableOpacity>
-                        <Text style={styles.title}>Car</Text>
-                    </View>
-                    <View>
-                        <TouchableOpacity onPress={() => handleBoxPress(2)}>
-                            <View style={[styles.box, activeBox === 2 && styles.activeBox]}>
-                                <Image source={require('../../assets/images/bus-icon.png')} style={{ width: 34, height: 32 }} />
-                            </View>
-                        </TouchableOpacity>
-                        <Text style={styles.title}>Bus</Text>
-                    </View>
-                    <View>
-                        <TouchableOpacity onPress={() => handleBoxPress(3)}>
-                            <View style={[styles.box, activeBox === 3 && styles.activeBox]}>
-                                <Image source={require('../../assets/images/train-icon.png')} style={{ width: 34, height: 32 }} />
-                            </View>
-                        </TouchableOpacity>
-                        <Text style={styles.title}>Train</Text>
+                        <Text style={styles.title}>Room Rent</Text>
                     </View>
                 </View>
-
             </View>
 
             <View style={styles.section1}>
-
                 <View style={styles.section2}>
                     <ScrollView showsVerticalScrollIndicator={false} >
                         <Input
                             placeholder='Amount'
                             placeholderTextColor='white'
                             inputStyle={styles.inputStyle}
-                            value={transportDetails.amount}
-                            onChangeText={text => handleTransportChange('amount', text)}
+                            value={accommodationDetails.amount}
+                            onChangeText={text => handleAccommodationChange('amount', text)}
                         />
                         <TouchableOpacity onPress={() => setShowCalendar(true)}>
                             <Input
                                 placeholder='Date of Expense'
                                 placeholderTextColor='white'
                                 inputStyle={styles.inputStyle}
-                                value={transportDetails.dateOfExpense}
+                                value={accommodationDetails.dateOfExpense}
                                 editable={false}
                             />
                         </TouchableOpacity>
                         {showCalendar && (
                             <Calendar
                                 onDayPress={handleDateSelect}
-                                current={transportDetails.dateOfExpense}
+                                current={accommodationDetails.dateOfExpense}
                             />
                         )}
                         <Input
                             placeholder='Notes'
                             placeholderTextColor='white'
                             inputStyle={styles.inputStyle}
-                            value={transportDetails.notes}
-                            onChangeText={text => handleTransportChange('notes', text)}
+                            value={accommodationDetails.notes}
+                            onChangeText={text => handleAccommodationChange('notes', text)}
                         />
                         <Input
-                            placeholder='Pickup Location'
+                            placeholder='Check In'
                             placeholderTextColor='white'
                             inputStyle={styles.inputStyle}
-                            value={transportDetails.pickup}
-                            onChangeText={text => handleTransportChange('pickup', text)}
+                            value={accommodationDetails.checkIn}
+                            onChangeText={text => handleAccommodationChange('checkIn', text)}
                         />
                         <Input
-                            placeholder='Drop Location'
+                            placeholder='Check Out'
                             placeholderTextColor='white'
                             inputStyle={styles.inputStyle}
-                            value={transportDetails.drop}
-                            onChangeText={text => handleTransportChange('drop', text)}
+                            value={accommodationDetails.checkOut}
+                            onChangeText={text => handleAccommodationChange('checkOut', text)}
                         />
                     </ScrollView>
                 </View>
                 <Text style={styles.attachTitle}>Attach Receipts (Image or File)</Text>
                 <View style={styles.cameraContainer}>
                     <TouchableOpacity style={styles.boxAttach} onPress={handleFilePicker}>
-                        <Image source={require('../../assets/images/upload.png')} style={{ width: 42, height: 28, }} />
+                        <Image source={require('../../../assets/images/upload.png')} style={{ width: 42, height: 28, }} />
                         <Text style={{ fontSize: 10, margin: 4, color: '#fff' }}>Browse File to Upload</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.boxAttach} onPress={handlePhotoPicker}>
-                        <Image source={require('../../assets/images/photo.png')} style={{ width: 38, height: 30, }} />
+                        <Image source={require('../../../assets/images/photo.png')} style={{ width: 38, height: 30, }} />
                         <Text style={{ fontSize: 10, margin: 4, color: '#fff' }}>Click Photo</Text>
                     </TouchableOpacity>
                 </View>
@@ -249,17 +231,7 @@ const TransportType = () => {
                     <TouchableOpacity style={styles.button1} onPress={handleSubmit}>
                         <Text style={styles.btnText}>Submit</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button2} onPress={() => { // handle reset
-                        setTransportDetails({
-                            amount: '',
-                            dateOfExpense: '',
-                            pickup: '',
-                            drop: '',
-                            notes: '',
-                        });
-                        setSelectedImage(null); // Clear selected image
-                        setSelectedFile(null);  // Clear selected file
-                    }}>
+                    <TouchableOpacity style={styles.button2} onPress={handleSubmit}>
                         <Text style={styles.btnText} >Reset</Text>
                     </TouchableOpacity>
                 </View>
@@ -269,7 +241,7 @@ const TransportType = () => {
     )
 }
 
-export default TransportType;
+export default ManagerAccommodationType;
 
 const styles = StyleSheet.create({
     container: {

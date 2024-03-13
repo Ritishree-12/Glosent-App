@@ -1,13 +1,17 @@
-import { StyleSheet, Text, View, StatusBar, TextInput, Pressable, Image, FlatList,Dimensions } from 'react-native'
+import { StyleSheet, Text, View, StatusBar, TextInput, Pressable, Image, FlatList,Dimensions,TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native'
 
 
 const { width } = Dimensions.get('window');
 
 export default function EmployeeExpenses() {
+
+    const navigation = useNavigation();
+
     const [expensesData, setExpensesData] = useState([]);
     const [error, setError] = useState(null);
     const [filteredExpenses, setFilteredExpenses] = useState([]);
@@ -201,29 +205,36 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'row',
         height: 20,
-        marginLeft: 5
+        marginLeft: 5,
+        // paddingHorizontal:2
     },
     section2BtnText: {
         color: '#fff',
         fontSize: 10,
         paddingHorizontal: 5,
         fontWeight: 'bold',
+        // paddingHorizontal:2
+        
     },
     section2BtnImage: {
         width: 10,
         height: 15,
         alignSelf: 'center',
-        padding: 10
+        paddingHorizontal:2,
+        left:5,
+        margin:3
+     
     },
     section2BtnImage1: {
         width: 10,
         height: 10,
-        //marginRight: 5,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        paddingHorizontal:2,
+        left:5,
+        margin:5
     },
     itemContainer: {
         justifyContent: 'space-between',
-        // padding: 10,
         width: '95%',
         backgroundColor: '#1A50A7',
         alignSelf: 'center',

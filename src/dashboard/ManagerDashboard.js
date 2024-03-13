@@ -59,7 +59,7 @@ const ManagerDashboard = () => {
                     <Text style={styles.title}>Send Notification</Text>
                 </View>
                 <View>
-                    <TouchableOpacity onPress={() => navigation.navigate('ExpensesEntry')}>
+                    <TouchableOpacity onPress={() => navigation.navigate('ExpenseEntriesManager')}>
                         <View style={styles.box}>
                             <Image source={require('../../assets/images/expenses1.png')} style={{ width: 56, height: 56 }} />
                         </View>
@@ -74,6 +74,37 @@ const ManagerDashboard = () => {
                     </TouchableOpacity>
                     <Text style={styles.title}>Transaction History</Text>
                 </View>
+
+                
+
+            </View>
+            <View style={styles.boxContainer2}>
+                <View>
+                    <TouchableOpacity onPress={() => navigation.navigate('ManagerExpenseReport')}>
+                        <View style={styles.box}>
+                            <Image source={require('../../assets/images/notification.png')} style={{ width: 56, height: 56 }} />
+                        </View>
+                    </TouchableOpacity>
+                    <Text style={styles.title}>Manager Expense Report</Text>
+                </View>
+                {/* <View>
+                    <TouchableOpacity onPress={() => navigation.navigate('ExpenseEntriesManager')}>
+                        <View style={styles.box}>
+                            <Image source={require('../../assets/images/expenses1.png')} style={{ width: 56, height: 56 }} />
+                        </View>
+                    </TouchableOpacity>
+                    <Text style={styles.title}>Expenses Entry</Text>
+                </View> */}
+                {/* <View>
+                    <TouchableOpacity onPress={() => navigation.navigate('TransactionHistory')}>
+                        <View style={styles.box}>
+                            <Image source={require('../../assets/images/transaction.png')} style={{ width: 54, height: 54 }} />
+                        </View>
+                    </TouchableOpacity>
+                    <Text style={styles.title}>Transaction History</Text>
+                </View>
+
+                 */}
 
             </View>
             <View style={styles.section1}>

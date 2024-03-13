@@ -10,7 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const { width } = Dimensions.get('window');
 
-const TransportType = () => {
+const ManagerTransportationType = () => {
     const navigation = useNavigation();
     const [activeBox, setActiveBox] = useState(0);
     const [showCalendar, setShowCalendar] = useState(false);
@@ -43,7 +43,7 @@ const TransportType = () => {
     };
 
     const handleSubmit = async () => {
-        // navigation.goBack();
+        navigation.goBack();
         const data = {
             subExpenseType: activeBox === 0 ? 'Auto' :
                 activeBox === 1 ? 'Car' :
@@ -59,15 +59,15 @@ const TransportType = () => {
                 console.error('Authentication token not found');
                 return;
             }
-            const response = await axios.post('http://46.28.44.174:5001/v1/expense/addExpense', data, {
+            const response = await axios.post('http://46.28.44.174:5001/manager/expense/managerAddExpense', data, {
                 headers: {
-                    'Content-Type': 'application/json', // Corrected content type
+                    'Content-Type': 'application/json', 
                     Authorization: `Bearer ${authToken}`
                 }
             });
             // Handle the response data
             if (response.data.status === "1") {
-                // Update your state or perform any other actions based on the response
+              
                 const responseData = response.data.data;
                 console.log('Expense submitted successfully:', responseData);
                 // Clear the form fields
@@ -141,7 +141,7 @@ const TransportType = () => {
             <StatusBar backgroundColor="#003c9e" />
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                    <Image source={require('../../assets/images/arrow.png')} style={{ width: 30, height: 30, }} />
+                    <Image source={require('../../../assets/images/arrow.png')} style={{ width: 30, height: 30, }} />
                 </TouchableOpacity>
                 <Text style={styles.headerText}>Transportation</Text>
             </View>
@@ -152,7 +152,7 @@ const TransportType = () => {
                     <View>
                         <TouchableOpacity onPress={() => handleBoxPress(0)}>
                             <View style={[styles.box, activeBox === 0 && styles.activeBox]}>
-                                <Image source={require('../../assets/images/auto-icon.png')} style={{ width: 34, height: 32 }} />
+                                <Image source={require('../../../assets/images/auto-icon.png')} style={{ width: 34, height: 32 }} />
                             </View>
                         </TouchableOpacity>
                         <Text style={styles.title}>Auto</Text>
@@ -160,7 +160,7 @@ const TransportType = () => {
                     <View>
                         <TouchableOpacity onPress={() => handleBoxPress(1)}>
                             <View style={[styles.box, activeBox === 1 && styles.activeBox]}>
-                                <Image source={require('../../assets/images/car-icon.png')} style={{ width: 40, height: 40 }} />
+                                <Image source={require('../../../assets/images/car-icon.png')} style={{ width: 40, height: 40 }} />
                             </View>
                         </TouchableOpacity>
                         <Text style={styles.title}>Car</Text>
@@ -168,7 +168,7 @@ const TransportType = () => {
                     <View>
                         <TouchableOpacity onPress={() => handleBoxPress(2)}>
                             <View style={[styles.box, activeBox === 2 && styles.activeBox]}>
-                                <Image source={require('../../assets/images/bus-icon.png')} style={{ width: 34, height: 32 }} />
+                                <Image source={require('../../../assets/images/bus-icon.png')} style={{ width: 34, height: 32 }} />
                             </View>
                         </TouchableOpacity>
                         <Text style={styles.title}>Bus</Text>
@@ -176,7 +176,7 @@ const TransportType = () => {
                     <View>
                         <TouchableOpacity onPress={() => handleBoxPress(3)}>
                             <View style={[styles.box, activeBox === 3 && styles.activeBox]}>
-                                <Image source={require('../../assets/images/train-icon.png')} style={{ width: 34, height: 32 }} />
+                                <Image source={require('../../../assets/images/train-icon.png')} style={{ width: 34, height: 32 }} />
                             </View>
                         </TouchableOpacity>
                         <Text style={styles.title}>Train</Text>
@@ -237,11 +237,11 @@ const TransportType = () => {
                 <Text style={styles.attachTitle}>Attach Receipts (Image or File)</Text>
                 <View style={styles.cameraContainer}>
                     <TouchableOpacity style={styles.boxAttach} onPress={handleFilePicker}>
-                        <Image source={require('../../assets/images/upload.png')} style={{ width: 42, height: 28, }} />
+                        <Image source={require('../../../assets/images/upload.png')} style={{ width: 42, height: 28, }} />
                         <Text style={{ fontSize: 10, margin: 4, color: '#fff' }}>Browse File to Upload</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.boxAttach} onPress={handlePhotoPicker}>
-                        <Image source={require('../../assets/images/photo.png')} style={{ width: 38, height: 30, }} />
+                        <Image source={require('../../../assets/images/photo.png')} style={{ width: 38, height: 30, }} />
                         <Text style={{ fontSize: 10, margin: 4, color: '#fff' }}>Click Photo</Text>
                     </TouchableOpacity>
                 </View>
@@ -269,7 +269,7 @@ const TransportType = () => {
     )
 }
 
-export default TransportType;
+export default ManagerTransportationType;
 
 const styles = StyleSheet.create({
     container: {

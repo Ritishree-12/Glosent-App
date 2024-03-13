@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     },
     title: {
         color: '#e2e733',
-        marginTop: height * 0.1,
+        marginTop: height * 0.11,
         alignItems: 'flex-start',
         fontSize: width * 0.06,
         fontWeight: '600',
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     userTypeContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: height * 0.02,
+        // marginTop: height * 0.02,
     },
     userTypeButton: {
         backgroundColor: '#1a50a7',

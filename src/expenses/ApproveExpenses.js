@@ -1,18 +1,23 @@
-import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Image, ScrollView, Pressable, TextInput } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Image, ScrollView, Pressable, TextInput,Dimensions} from 'react-native';
 import React, { useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
+
+const { width } = Dimensions.get('window');
 const ApproveExpenses = () => {
+    const navigation = useNavigation();
+
     const [expensesData, setExpensesData] = useState([]);
     const [error, setError] = useState(null);
     const getStatusColor = (status) => {
         switch (status) {
             case 'Approved':
-                return '#22BB33'; // Green color for Approved
+                return '#22BB33';
             case 'Pending':
-                return '#FFC300'; // Yellow color for Pending
+                return '#FFC300';
             case 'Rejected':
-                return 'red'; // Red color for Rejected
+                return 'red';
         }
     }
     useEffect(() => {
@@ -28,7 +33,7 @@ const ApproveExpenses = () => {
                 console.log('ApproveExpenses****************************', data)
                 const uniqueExpenses = Array.from(new Set(data.expenses.map(expense => expense._id)))
                     .map(id => data.expenses.find(expense => expense._id === id));
-                    console.log('unque',uniqueExpenses)
+                console.log('unque', uniqueExpenses)
                 setExpensesData(uniqueExpenses);
                 //setLoading(false);
             } catch (error) {
@@ -43,6 +48,9 @@ const ApproveExpenses = () => {
         <View style={styles.container}>
             <StatusBar backgroundColor="#003C9E" />
             <View style={styles.header}>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                    <Image source={require('../../assets/images/arrow.png')} style={{ width: 30, height: 30, }} />
+                </TouchableOpacity>
                 <Text style={styles.headerText}>Approve Expenses</Text>
             </View>
             <View>
@@ -74,7 +82,7 @@ const ApproveExpenses = () => {
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <View>
                                 <Text style={styles.categoriesType1}>Food - {expense.subExpenseType === 'breakfast' ? 'breakfast' : 'lunch'} : {expense.amount}</Text>
-                                <Text style={styles.categoriesType1}>Transportation - {expense.subExpenseType === 'train' ? 'Train' : expense.subExpenseType === 'bus' ? 'Bus' :null} : {expense.amount}</Text>
+                                <Text style={styles.categoriesType1}>Transportation - {expense.subExpenseType === 'train' ? 'Train' : expense.subExpenseType === 'bus' ? 'Bus' : null} : {expense.amount}</Text>
                             </View>
                             <View style={{}}>
                                 <Text style={styles.categoriesType1}>Food - {expense.subExpenseType === 'snacks' ? 'snacks' : 'dinner'} : {expense.amount}</Text>
@@ -117,14 +125,20 @@ const styles = StyleSheet.create({
         backgroundColor: '#003C9E',
     },
     header: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#ffffff',
         height: 70,
-        justifyContent: 'center',
         alignItems: 'center',
+        justifyContent: 'center',
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,
-        position: 'relative',
         elevation: 5,
+        flexDirection: 'row',
+        paddingHorizontal: '2%',
+    },
+    backButton: {
+        position: 'absolute',
+        left: 18,
+        zIndex: 1,
     },
     headerText: {
         fontSize: 18,

@@ -21,6 +21,11 @@ import TransactionHistory from '../expenses/TransactionHistory';
 import AdminEmployeeList from '../admin/AdminEmployeeList';
 import ManagerList from '../admin/ManagerList';
 import AdminEmpExpensesReport from '../admin/AdminEmpExpenses';
+import ManagerFoodType from '../manager/managerExpenses/ManagerFoodType';
+import ManagerAccommodationType from '../manager/managerExpenses/ManagerAccommodationType';
+import ManagerTransportationType from '../manager/managerExpenses/ManagerTransportExpenses';
+import ExpenseEntriesManager from '../manager/managerExpenses/ExpenseEntriesManager';
+import ManagerExpenseReport from '../manager/expesesReport/ManagerExpenseReport';
 
 const Stack = createNativeStackNavigator();
 
@@ -122,6 +127,33 @@ const AuthStack = () => {
                     component={AdminEmpExpensesReport}
                     options={{ headerShown: false }}
                 />
+                 <Stack.Screen
+                    name="ExpenseEntriesManager"
+                    component={ExpenseEntriesManager}
+                    options={{ headerShown: false }}
+                />
+                  <Stack.Screen
+                    name="ManagerFoodType"
+                    component={ManagerFoodType}
+                    options={{ headerShown: false }}
+                />
+                 <Stack.Screen
+                    name="ManagerAccommodationType"
+                    component={ManagerAccommodationType}
+                    options={{ headerShown: false }}
+                />
+                 <Stack.Screen
+                    name="ManagerTransportationType"
+                    component={ManagerTransportationType}
+                    options={{ headerShown: false }}
+                />
+                  <Stack.Screen
+                    name="ManagerExpenseReport"
+                    component={ManagerExpenseReport}
+                    options={{ headerShown: false }}
+                />
+                
+                
                 
             </Stack.Navigator>
        
