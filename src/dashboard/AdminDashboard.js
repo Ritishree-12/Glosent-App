@@ -1,10 +1,8 @@
-import { StatusBar, StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import { StatusBar, StyleSheet, Text, View, TouchableOpacity, Image, Dimensions } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 
-
-const AdminDashboard = () => {
-
+const ManagerDashboard = () => {
     const navigation = useNavigation();
 
     return (
@@ -12,125 +10,96 @@ const AdminDashboard = () => {
             <StatusBar backgroundColor="#003c9e" />
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.toggleDrawer()} style={styles.backButton}>
-                    <Image source={require('../../assets/images/menu.png')} style={{ width: 24, height: 24, }} />
+                    <Image source={require('../../assets/images/menu.png')} style={{ width: 24, height: 24, color:'#003c9d' }} />
                 </TouchableOpacity>
-                <Text style={styles.headerText}>Approve Expenses</Text>
+                <Text style={styles.headerText}>Admin Dashboard</Text>
             </View>
-
             <View style={styles.boxContainer}>
                 <View>
-                    <TouchableOpacity onPress={() => navigation.navigate('AdminEmployeeList')}>
-                        <View style={styles.box}>
-                            <Image source={require('../../assets/images/user.png')} style={{ width: 56, height: 56 }} />
-                        </View>
+                    <TouchableOpacity onPress={() => navigation.navigate('AdminEmployeeList')} style={styles.box}>
+                        <Image source={require('../../assets/images/user.png')} style={styles.boxIcon} />
                     </TouchableOpacity>
                     <Text style={styles.title}>Employee List</Text>
                 </View>
                 <View>
-                    <TouchableOpacity onPress={() => navigation.navigate('ManagerList')}>
-                        <View style={styles.box}>
-                            <Image source={require('../../assets/images/expenses1.png')} style={{ width: 56, height: 56 }} />
-                        </View>
+                    <TouchableOpacity onPress={() => navigation.navigate('ManagerList')} style={styles.box}>
+                        <Image source={require('../../assets/images/expenses1.png')} style={styles.boxIcon} />
                     </TouchableOpacity>
                     <Text style={styles.title}>Manager List</Text>
                 </View>
                 <View>
-                    <TouchableOpacity onPress={() => navigation.navigate('AdminEmpExpensesReport')}>
-                        <View style={styles.box}>
-                            <Image source={require('../../assets/images/rupees.png')} style={{ width: 54, height: 54 }} />
-                        </View>
+                    <TouchableOpacity onPress={() => navigation.navigate('AdminEmpExpensesReport')} style={styles.box}>
+                        <Image source={require('../../assets/images/notification.png')} style={styles.boxIcon} />
                     </TouchableOpacity>
                     <Text style={styles.title}>Approve Manager Expenses</Text>
                 </View>
-
             </View>
-            <View style={styles.boxContainer2}>
+            <View style={styles.boxContainer}>
+               
                 <View>
-                    <TouchableOpacity onPress={() => navigation.navigate('ExpensesEntry')}>
-                        <View style={styles.box}>
-                            <Image source={require('../../assets/images/notification.png')} style={{ width: 56, height: 56 }} />
-                        </View>
+                    <TouchableOpacity onPress={() => navigation.navigate('ExpenseEntriesManager')} style={styles.box}>
+                        <Image source={require('../../assets/images/expenses1.png')} style={styles.boxIcon} />
+                    </TouchableOpacity>
+                    <Text style={styles.title}>Employee Expenses</Text>
+                </View>
+                <View>
+                    <TouchableOpacity onPress={() => navigation.navigate('ManagerExpenses')} style={styles.box}>
+                        <Image source={require('../../assets/images/transaction.png')} style={styles.boxIcon} />
+                    </TouchableOpacity>
+                    <Text style={styles.title}>Manager Expenses</Text>
+                </View>
+                <View>
+                    <TouchableOpacity onPress={() => navigation.navigate('AdminEmpExpensesReport')} style={styles.box}>
+                        <Image source={require('../../assets/images/notification.png')} style={styles.boxIcon} />
+                    </TouchableOpacity>
+                    <Text style={styles.title}>Employee Transaction History</Text>
+                </View>
+            </View>
+            <View style={styles.boxContainer}>
+                <View>
+                <TouchableOpacity onPress={() => navigation.navigate('AdminMngTransHistory')} style={styles.box}>
+                    <Image source={require('../../assets/images/notification.png')} style={styles.boxIcon} />            
+                </TouchableOpacity>
+                <Text style={styles.title}>Manager Transaction History</Text>
+                </View>  
+                <View>
+                    <TouchableOpacity onPress={() => navigation.navigate('TransactionHistory')} style={styles.box}>
+                        <Image source={require('../../assets/images/transaction.png')} style={styles.boxIcon} />
                     </TouchableOpacity>
                     <Text style={styles.title}>Send Notification</Text>
-                </View>
-                <View>
-                    <TouchableOpacity onPress={() => navigation.navigate('ExpensesReport')}>
-                        <View style={styles.box}>
-                            <Image source={require('../../assets/images/expenses1.png')} style={{ width: 56, height: 56 }} />
-                        </View>
-                    </TouchableOpacity>
-                    <Text style={styles.title}>Add Expenses</Text>
-                </View>
-                <View>
-                    <TouchableOpacity onPress={() => navigation.navigate('TransactionHistory')}>
-                        <View style={styles.box}>
-                            <Image source={require('../../assets/images/transaction.png')} style={{ width: 54, height: 54 }} />
-                        </View>
-                    </TouchableOpacity>
-                    <Text style={styles.title}>Transaction History</Text>
-                </View>
-
+                </View>         
             </View>
             <View style={styles.section1}>
                 <View style={styles.yellowBtn}>
-                <View>
-                    <Image source={require('../../assets/images/user-blue.png')} style={{ width: 36, height: 36, padding: 16 }} />
-                    </View>
-                    <View style={styles.verticalLine}></View>
+                    <Image source={require('../../assets/images/user-blue.png')} style={styles.yellowBtnIcon} />
+                    <View style={styles.verticalLine} />
                     <View>
-                        <Text style={{ color: '#003d9e',fontSize:12}}>Total Employee</Text>
-                        <Text style={{ color: '#003d9e',fontWeight:'bold' }}>500</Text>
+                        <Text style={styles.yellowBtnText}>Total Employee</Text>
+                        <Text style={styles.yellowBtnText}>500</Text>
                     </View>
                 </View>
-
-                <View style={styles.yellowBtn}>                  
-                    <View>
-                    <Image source={require('../../assets/images/user-blue.png')} style={{ width: 36, height: 36, padding: 16 }} />
-                    </View>
-                  <View style={styles.verticalLine}></View>
-                    <View>
-                        <Text style={{ color: '#003d9e',fontSize:12}}>Total Transaction</Text>
-                        <Text style={{ color: '#003d9e',fontWeight:'bold' }}>1,12,345.00</Text>
-                    </View>
-                  
-                </View>
-            </View>
-            <View style={styles.section1}>
                 <View style={styles.yellowBtn}>
-                <View>
-                    <Image source={require('../../assets/images/user-blue.png')} style={{ width: 36, height: 36, padding: 16 }} />
-                    </View>
-                    <View style={styles.verticalLine}></View>
+                    <Image source={require('../../assets/images/user-blue.png')} style={styles.yellowBtnIcon} />
+                    <View style={styles.verticalLine} />
                     <View>
-                        <Text style={{ color: '#003d9e',fontSize:12}}>Total Employee</Text>
-                        <Text style={{ color: '#003d9e',fontWeight:'bold' }}>500</Text>
+                        <Text style={styles.yellowBtnText}>Total Transaction</Text>
+                        <Text style={styles.yellowBtnText}>1,12,345.00</Text>
                     </View>
-                </View>
-
-                <View style={styles.yellowBtn}>                  
-                    <View>
-                    <Image source={require('../../assets/images/user-blue.png')} style={{ width: 36, height: 36, padding: 16 }} />
-                    </View>
-                  <View style={styles.verticalLine}></View>
-                    <View>
-                        <Text style={{ color: '#003d9e',fontSize:12}}>Total Transaction</Text>
-                        <Text style={{ color: '#003d9e',fontWeight:'bold' }}>1,12,345.00</Text>
-                    </View>
-                  
                 </View>
             </View>
-
-
         </View>
     );
 };
 
-export default AdminDashboard;
+export default ManagerDashboard;
+
+const { width } = Dimensions.get('window');
+const boxSize = (width - 80) / 3;
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#003C9E',
+        backgroundColor: '#003c9e',
     },
     header: {
         backgroundColor: '#ffffff',
@@ -155,34 +124,33 @@ const styles = StyleSheet.create({
     },
     boxContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
+        paddingHorizontal: 16,
         marginTop: 20,
-        paddingHorizontal: 10, 
     },
-    boxContainer2: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        paddingHorizontal: 10, 
-    },
+   
     box: {
-        width: 80,
-        height: 80,
-        backgroundColor: '#09B724',
+        width: boxSize,
+        height: boxSize,
+        backgroundColor: '#09b724',
         borderRadius: 15,
-        borderColor: '#fff',
-        borderWidth: 0.6,
         alignItems: 'center',
         justifyContent: 'center',
-        marginVertical: 10,
-        marginHorizontal: 10,
+        borderColor:'#fff',
+        borderWidth:1
+    },
+    boxIcon: {
+        width: boxSize * 0.6,
+        height: boxSize * 0.6,
     },
     title: {
         color: '#fff',
         fontSize: 12,
         fontWeight: 'bold',
         textAlign: 'center',
-        alignSelf: 'center',
-        width: 80, // Added width to limit the text width
+        marginTop: 5,
+        width:87
+        // paddingHorizontal: 10,
     },
     section1: {
         flexDirection: 'row',
@@ -190,16 +158,26 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     yellowBtn: {
-        backgroundColor: '#E3E635',
+        backgroundColor: '#E3e635',
         borderRadius: 10,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        margin: 10,
+        marginHorizontal: 10,
         borderColor: '#fff',
         borderWidth: 1,
         width: 160,
         height: 56,
+    },
+    yellowBtnIcon: {
+        width: 36,
+        height: 36,
+        padding: 10,
+    },
+    yellowBtnText: {
+        color: '#003d9e',
+        fontSize: 12,
+        fontWeight: 'bold',
     },
     verticalLine: {
         width: 1,

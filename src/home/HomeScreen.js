@@ -11,15 +11,14 @@ const HomeScreen = () => {
     <View style={styles.container}>
       <StatusBar backgroundColor="#003c9e" />
       <View style={styles.header}>
-        <View>
-          <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-            <Image source={require('../../assets/images/menu.png')} style={{ width: 24, height: 20, marginLeft: 30 }} />
-          </TouchableOpacity>
-        </View>
-        <View>
+
+        <TouchableOpacity onPress={() => navigation.toggleDrawer()} style={styles.backButton}>
+          <Image source={require('../../assets/images/menu.png')} style={{ width: 24, height: 20, }} />
+        </TouchableOpacity>
         <Text style={styles.headerText}>Employee Dashboard</Text>
+        <View>
+
         </View>
-      
       </View>
       <View style={styles.boxContainer}>
         <View style={styles.boxWrapper}>
@@ -51,28 +50,30 @@ const styles = StyleSheet.create({
     backgroundColor: '#003c9e',
   },
   header: {
-    height: height * 0.09,
     backgroundColor: '#ffffff',
-    justifyContent:'flex-start',
+    height: 70,
     alignItems: 'center',
+    justifyContent: 'center',
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-    borderColor: '#b9ce19',
-    borderBottomWidth: 5,
-    position: 'relative',
     elevation: 5,
-    marginBottom: height * 0.05,
-    flexDirection:'row'
+    flexDirection: 'row',
+    paddingHorizontal: '2%',
+  },
+  backButton: {
+    position: 'absolute',
+    left: 18,
+    zIndex: 1,
   },
   headerText: {
-    fontSize: 18,
+    fontSize: width > 360 ? 18 : 16,
     fontWeight: 'bold',
-    color: '#000',
-    marginLeft:50
+    color: '#003c9d',
   },
   boxContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginTop:20
     // paddingHorizontal: width * 0,
   },
   boxWrapper: {

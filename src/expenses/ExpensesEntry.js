@@ -27,7 +27,7 @@ const ExpensesEntry = () => {
                     <View>
                         <TouchableOpacity onPress={() => navigation.navigate('FoodType')}>
                             <View style={styles.box}>
-                                <Image source={require('../../assets/images/food.png')} style={{ width: 46, height: 43 }} />
+                                <Image source={require('../../assets/images/food1.png')} style={{ width: 66, height: 66 }} />
                             </View>
                         </TouchableOpacity>
                         <Text style={styles.title}>Food</Text>
@@ -35,7 +35,7 @@ const ExpensesEntry = () => {
                     <View>
                         <TouchableOpacity onPress={() => navigation.navigate('TransportType')}>
                             <View style={styles.box}>
-                                <Image source={require('../../assets/images/location.png')} style={{ width: 46, height: 45 }} />
+                                <Image source={require('../../assets/images/transport.png')} style={{ width: 66, height: 66 }} />
                             </View>
                         </TouchableOpacity>
                         <Text style={styles.title}>Transportation</Text>
@@ -43,7 +43,7 @@ const ExpensesEntry = () => {
                     <View>
                         <TouchableOpacity onPress={() => navigation.navigate('AccomodationType')}>
                             <View style={styles.box}>
-                                <Image source={require('../../assets/images/bed.png')} style={{ width: 44, height: 44 }} />
+                                <Image source={require('../../assets/images/hotel.png')} style={{ width: 66, height: 66 }} />
                             </View>
                         </TouchableOpacity>
                         <Text style={styles.title}>Accomodation</Text>
@@ -53,10 +53,10 @@ const ExpensesEntry = () => {
                     <View>
                         <TouchableOpacity onPress={() => navigation.navigate('EmployeeList')}>
                             <View style={styles.box}>
-                                <Image source={require('../../assets/images/user.png')} style={{ width: 56, height: 56 }} />
+                                <Image source={require('../../assets/images/fuel.png')} style={{ width: 66, height: 66 }} />
                             </View>
                         </TouchableOpacity>
-                        <Text style={styles.title}>user</Text>
+                        <Text style={styles.title}>Fuel</Text>
                     </View>
 
                     {/* <View>
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     headerText: {
         fontSize: width > 360 ? 18 : 16,
         fontWeight: 'bold',
-        color: '#000',
+        color: '#003c9d',
     },
     section1: {
         backgroundColor: '#1a50a7',
@@ -137,12 +137,13 @@ const styles = StyleSheet.create({
     },
     boxContainer: {
         flexDirection: 'row',
-        width: '100%',
-        justifyContent: 'center'
+        // width: '100%',
+        justifyContent: 'flex-start'
 
     },
     boxContainer2: {
         flexDirection: 'row',
+        // justifyContent: 'flex-start'
     },
     box: {
         width: 70,

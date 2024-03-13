@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, StatusBar, Picker, FlatList, ScrollView, Image, TouchableOpacity,TextInput } from 'react-native'
+import { StyleSheet, Text, View, StatusBar, Picker, FlatList, ScrollView, Image, TouchableOpacity, TextInput } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import RNPickerSelect from 'react-native-picker-select';
 import axios from 'axios';
@@ -51,7 +51,7 @@ const TransactionHistory = () => {
         return fullName.toLowerCase().includes(searchQuery.toLowerCase()) || manager.emplyId.toLowerCase().includes(searchQuery.toLowerCase()) || manager.managerDepartment.toLowerCase().includes(searchQuery.toLowerCase());
     });
 
-   
+
 
     return (
         <View style={styles.container}>
@@ -100,33 +100,33 @@ const TransactionHistory = () => {
                         }}
                     ></Dropdown>
                 </View>
-                <View style={{marginLeft:5,justifyContent:'center',width:'10%',height:30,alignSelf:'center',backgroundColor:'yellow',borderRadius:5,marginTop:5}}>
+                <View style={{ marginLeft: 5, justifyContent: 'center', width: '10%', height: 30, alignSelf: 'center', backgroundColor: 'yellow', borderRadius: 5, marginTop: 5 }}>
                     <TouchableOpacity>
-                    <TextInput
-            style={{ color: 'white' }}
-            placeholder="Search"
-            placeholderTextColor="white"
-            value={searchQuery}
-            onChangeText={text => setSearchQuery(text)}
-        />
-                <Image style={styles.section2BtnImage} source={require('../../assets/images/searchGray.png')} />
-                </TouchableOpacity>
+                        <TextInput
+                            style={{ color: 'white' }}
+                            placeholder="Search"
+                            placeholderTextColor="white"
+                            value={searchQuery}
+                            onChangeText={text => setSearchQuery(text)}
+                        />
+                        <Image style={styles.section2BtnImage} source={require('../../assets/images/searchGray.png')} />
+                    </TouchableOpacity>
                 </View>
                 {/* <View style={{ width: '30%', }}>
                     <Text style={styles.text}>Total: {totalExpenseAmounts}</Text>
                 </View> */}
-             </View>
+            </View>
 
-             <View style={{ flexDirection: 'row',width:'90%',alignSelf:'center',justifyContent:'space-evenly',marginTop:10 }}>
+            <View style={{ flexDirection: 'row', width: '90%', alignSelf: 'center', justifyContent: 'space-evenly', marginTop: 10 }}>
                 <View style={{ flexDirection: 'row', }}>
-                    <TouchableOpacity style={{height:20,width:'30%',borderWidth:1,borderRadius:20,paddingHorizontal:2,justifyContent:'center',alignItems:'center',borderColor:'yellow'}}>
-                        <Text style={{fontSize:10,color:'yellow'}}>Weekly</Text>
+                    <TouchableOpacity style={{ height: 20, width: '30%', borderWidth: 1, borderRadius: 20, paddingHorizontal: 2, justifyContent: 'center', alignItems: 'center', borderColor: 'yellow' }}>
+                        <Text style={{ fontSize: 10, color: 'yellow' }}>Weekly</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{height:20,width:'30%',borderWidth:1,borderRadius:20,paddingHorizontal:2,justifyContent:'center',alignItems:'center',marginLeft:10,borderColor:'yellow'}}>
-                        <Text style={{fontSize:10,color:'yellow'}}>Daily</Text>
+                    <TouchableOpacity style={{ height: 20, width: '30%', borderWidth: 1, borderRadius: 20, paddingHorizontal: 2, justifyContent: 'center', alignItems: 'center', marginLeft: 10, borderColor: 'yellow' }}>
+                        <Text style={{ fontSize: 10, color: 'yellow' }}>Daily</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={{width:'28%' }}>
+                <View style={{ width: '28%' }}>
                     <Text style={styles.text}>Total: {totalExpenseAmounts}</Text>
                 </View>
             </View>
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     headerText: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: '#000',
+        color: '#003c9d',
     },
     text: {
         color: 'yellow',
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
         width: 18,
         height: 18,
         marginLeft: 8,
-        
+
 
     },
     selectedStyle: {

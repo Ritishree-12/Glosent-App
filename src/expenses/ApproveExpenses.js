@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     headerText: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: '#000',
+        color: '#003c9d',
     },
     section1: {
         flexDirection: 'row',

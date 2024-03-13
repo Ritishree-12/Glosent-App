@@ -87,7 +87,7 @@ const ManagerDashboard = () => {
 export default ManagerDashboard;
 
 const { width } = Dimensions.get('window');
-const boxSize = (width - 90) / 3;
+const boxSize = (width - 80) / 3;
 
 const styles = StyleSheet.create({
     container: {

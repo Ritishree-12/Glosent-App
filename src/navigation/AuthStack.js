@@ -26,6 +26,7 @@ import ManagerAccommodationType from '../manager/managerExpenses/ManagerAccommod
 import ManagerTransportationType from '../manager/managerExpenses/ManagerTransportExpenses';
 import ExpenseEntriesManager from '../manager/managerExpenses/ExpenseEntriesManager';
 import ManagerExpenseReport from '../manager/expesesReport/ManagerExpenseReport';
+import AdminMngTransHistory from '../admin/AdminMngTransHistory';
 
 const Stack = createNativeStackNavigator();
 
@@ -152,6 +153,12 @@ const AuthStack = () => {
                     component={ManagerExpenseReport}
                     options={{ headerShown: false }}
                 />
+                  <Stack.Screen
+                    name="AdminMngTransHistory"
+                    component={AdminMngTransHistory}
+                    options={{ headerShown: false }}
+                />
+                
                 
                 
                 
